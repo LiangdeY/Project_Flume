@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "721631223973-3t0ol61rfksldo30947qcvm6vmr9eipf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "comp5216.sydney.edu.au.project_flume",
+            "certificate_hash": "8dac65d4d6f102c8a961ac4db49a6be357d81300"
+          }
+        },
+        {
           "client_id": "721631223973-sca7lvdoufba7rl12k2313qki9f14nqn.apps.googleusercontent.com",
           "client_type": 3
         }
