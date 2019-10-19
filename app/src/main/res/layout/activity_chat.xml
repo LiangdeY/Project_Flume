@@ -6,7 +6,6 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
     android:orientation="vertical"
     tools:context=".ChatActivity">
 
@@ -16,41 +15,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@id/send_message_btn"
-
         android:divider="@android:color/transparent"
         android:dividerHeight="16dp"
         android:layout_marginBottom="16dp"
         />
-
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/send_message_btn"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/message_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/message" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/send_message_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:clickable="true"
-        android:tint="@android:color/white"
-        app:fabSize="mini"
-        android:src="@drawable/ic_send"
-        android:focusable="true" />
 
 
 </RelativeLayout>
