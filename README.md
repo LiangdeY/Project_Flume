@@ -1,2 +1,2 @@
 # Project_Flume
-COMP5216_G1_GroupProject
+G1_GroupProject
