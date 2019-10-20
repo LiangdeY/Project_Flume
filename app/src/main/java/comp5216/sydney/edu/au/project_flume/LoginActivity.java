@@ -27,8 +27,8 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         email = findViewById(R.id.email_login);
         password = findViewById(R.id.password_login);
-        loginBtn = findViewById(R.id.loginBtn);
 
+        loginBtn = findViewById(R.id.loginBtn);
         loginBtn.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                                     if(task.isSuccessful()) {
                                         Intent i = new Intent(LoginActivity.this,
                                                 HomeActivity.class);
+                                        i.putExtra("login", "1");
                                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
                                                 Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(i);
@@ -57,10 +58,8 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-
                 }
             }
-        } );
-
+        });
     }
 }

@@ -80,6 +80,8 @@ public class SignUpActivity extends AppCompatActivity {
                             hashMap.put("id", userId);
                             hashMap.put("username", username);
                             hashMap.put("imageURL", "default");
+                            hashMap.put("isMatch", "N");
+                            hashMap.put("matchId", "N");
 
                             dbReference.setValue(hashMap).addOnCompleteListener(
                                     new OnCompleteListener<Void>() {
@@ -91,7 +93,11 @@ public class SignUpActivity extends AppCompatActivity {
                                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
                                                 Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(i);
+                                        Log.w("", "createUserWithEmail:Success", task.getException());
                                         finish();
+                                    }
+                                    else{
+                                        Log.w("", "createHashmap:failure", task.getException());
                                     }
                                 }
                             });

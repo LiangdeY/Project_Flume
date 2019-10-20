@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "721631223973",
-    "firebase_url": "https://flume-e7726.firebaseio.com",
-    "project_id": "flume-e7726",
-    "storage_bucket": "flume-e7726.appspot.com"
+    "project_number": "533181880761",
+    "firebase_url": "https://projectflume-da790.firebaseio.com",
+    "project_id": "projectflume-da790",
+    "storage_bucket": "projectflume-da790.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:721631223973:android:9889418eb3983f6bb1ed4c",
+        "mobilesdk_app_id": "1:533181880761:android:a4662493024d183c4cfe68",
         "android_client_info": {
           "package_name": "comp5216.sydney.edu.au.project_flume"
         }
       },
       "oauth_client": [
         {
-          "client_id": "721631223973-3t0ol61rfksldo30947qcvm6vmr9eipf.apps.googleusercontent.com",
+          "client_id": "533181880761-s379fksfdc2hoocg8or2tefcs63vprn5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "comp5216.sydney.edu.au.project_flume",
@@ -23,20 +23,20 @@
           }
         },
         {
-          "client_id": "721631223973-sca7lvdoufba7rl12k2313qki9f14nqn.apps.googleusercontent.com",
+          "client_id": "533181880761-vtlhndirkif7a37cfpcevr0lsd2o2fa2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCIeYkgKBeV_beqOUG2VyF36qvhXRxuK5c"
+          "current_key": "AIzaSyDv-tJTgiMLS7ZbG7hajFMTxUoneaUWbL4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "721631223973-sca7lvdoufba7rl12k2313qki9f14nqn.apps.googleusercontent.com",
+              "client_id": "533181880761-vtlhndirkif7a37cfpcevr0lsd2o2fa2.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

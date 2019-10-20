@@ -2,10 +2,11 @@ package comp5216.sydney.edu.au.project_flume.Model;
 
 public class User {
 
-
-    private  String id;
-    private  String username;
-    private  String imageURL;
+    private String id;
+    private String username;
+    private String imageURL;
+    private String matchId;
+    private String isMatch;
 
     public User (String id, String username, String imageURL) {
             this.id = id;
@@ -22,4 +23,10 @@ public class User {
 
     public String getImageURL() { return imageURL; }
     public void setImageURL(String imageURL) { this.imageURL = imageURL; }
+
+    public String getMatchId() { return matchId; }
+    public void setMatchId(String matchId) { this.matchId = matchId; }
+
+    public String getIsMatch() { return isMatch; }
+    public void setIsMatch(String isMatch) { this.isMatch = isMatch; }
 }

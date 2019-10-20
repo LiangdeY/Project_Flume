@@ -8,14 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
 public class MainActivity extends AppCompatActivity {
 
     Button login, signUp;
-    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +37,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //check if usr exit
-
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null) {
-            Log.d("uesr",user.getEmail().toString());
-
-            startActivity( new Intent(this, HomeActivity.class) );
-            finish();
-        }
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//
+//        //check if usr exit
+//        //auto login if user exit
+//        user = FirebaseAuth.getInstance().getCurrentUser();
+//        if(user != null) {
+//            Log.d("user",user.getEmail().toString());
+//
+//            startActivity( new Intent(this, HomeActivity.class) );
+//            finish();
+//        }
+//    }
 
 
 
