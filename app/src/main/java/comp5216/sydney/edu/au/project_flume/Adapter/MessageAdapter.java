@@ -2,6 +2,7 @@ package comp5216.sydney.edu.au.project_flume.Adapter;
 
 import android.content.Context;
 import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
 import comp5216.sydney.edu.au.project_flume.Model.Chat;
+import comp5216.sydney.edu.au.project_flume.ProfileActivity;
 import comp5216.sydney.edu.au.project_flume.R;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
@@ -61,8 +64,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             holder.user_image.setImageResource(R.mipmap.ic_launcher);
         }
         else{
-            //TODO load the custom image
+            Glide.with(mContext).load(imageURL).into(holder.user_image);
         }
+        if(chat.getIsSeen()){
+            holder.msgSeen.setText("Seen");
+        }else{
+            holder.msgSeen.setText("Sent");
+        }
+        Log.d("MessageAdapter", "message = "  + chat.getMessage() + " isSeen = " + chat.getIsSeen());
+
+
     }
 
     @Override
@@ -73,11 +84,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView message;
         public ImageView user_image;
+        public TextView msgSeen;
 
         public ViewHolder(View itemView) {
             super(itemView);
             message = itemView.findViewById(R.id.show_message);
             user_image = itemView.findViewById(R.id.user_image_chatItem);
+            msgSeen = itemView.findViewById(R.id.seen_chat_item);
         }
     }
 

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,8 +22,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -74,8 +77,8 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity( new Intent(HomeActivity.this, MainActivity.class));
                 finish();
                 return true;
-            case R.id.menu_setting:
-                Intent i = new Intent(HomeActivity.this, SettingActivity.class);
+            case R.id.menu_profile:
+                Intent i = new Intent(HomeActivity.this, ProfileActivity.class);
                 i.putExtra("from", "Home");
                 startActivity(i);
 
@@ -116,10 +119,14 @@ public class HomeActivity extends AppCompatActivity {
                 //
                 currentUserModel = dataSnapshot.getValue(User.class);
                 username.setText(currentUserModel.getUsername());
-                Toast.makeText(HomeActivity.this, "Welcome back, " + currentUserModel.getUsername(),
-                        Toast.LENGTH_SHORT).show();
-                if(currentUserModel.getImageURL().equals("default")) {
+                Toast.makeText(HomeActivity.this, "Welcome back, " +
+                        currentUserModel.getUsername(), Toast.LENGTH_SHORT).show();
+                if(currentUserModel.getImageUri().equals("default")) {
                     profile_image.setImageResource(R.mipmap.ic_launcher);
+                }
+                else{
+                    Glide.with(getApplicationContext()).load(currentUserModel.getImageUri())
+                            .into(profile_image);
                 }
             }
 

@@ -7,9 +7,9 @@
         app:showAsAction="never"
         android:id="@+id/chatMenu_check_Progress"
         />
-    <item android:title="Setting"
+    <item android:title="Profile"
         app:showAsAction="never"
-        android:id="@+id/chatMenu_setting"
+        android:id="@+id/chatMenu_profile"
         />
     <item android:title="End Chat"
         app:showAsAction="never"
