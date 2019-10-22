@@ -12,9 +12,6 @@
         <activity android:name=".CheckProgressActivity"></activity>
         <activity android:name=".SettingActivity" />
         <activity android:name=".HomeActivity" />
-        <activity
-            android:name=".LoginActivity"
-            android:parentActivityName=".MainActivity" />
         <activity android:name=".ChatActivity" />
         <activity
             android:name=".SignUpActivity"
