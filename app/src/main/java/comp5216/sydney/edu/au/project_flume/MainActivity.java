@@ -25,11 +25,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 
         auth = FirebaseAuth.getInstance();
         email = findViewById(R.id.email_login);
-        password = findViewById(R.id.password_login);
+        password = findViewById(R.id.email_sign_up);
 
         login = findViewById(R.id.login_main);
         signUp = findViewById(R.id.signUp_main);

@@ -23,16 +23,27 @@ import java.util.HashMap;
 
 
 public class SignUpActivity extends AppCompatActivity {
+    Button goBackBtn;
     FirebaseAuth auth;
     DatabaseReference dbReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_sign_up);
 
         auth = FirebaseAuth.getInstance();
+
         initUI();
+
+        goBackBtn = findViewById(R.id.goBackBtn);
+        goBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity( new Intent(SignUpActivity.this, MainActivity.class) );
+            }
+        });
     }
 
     private void initUI() {
