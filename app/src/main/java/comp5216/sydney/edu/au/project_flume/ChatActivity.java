@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -45,14 +46,14 @@ public class ChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     FirebaseUser fUser;
-    DatabaseReference targetUserRef;
+    DatabaseReference targetUserRef, chatRef;
     Intent intent;
 
     String targetUserId;
 
     MessageAdapter messageAdapter;
     List<Chat> mChat;
-
+    ValueEventListener seenListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +61,9 @@ public class ChatActivity extends AppCompatActivity {
 
         //TODO check if both sides stay matching
         InitUI();
-        GetTargetUser();
 
+        GetTargetUser();
+        SeenMessage();
     }
     //setup Menu
     @Override
@@ -73,17 +75,22 @@ public class ChatActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected (MenuItem item) {
         switch (item.getItemId()) {
             case R.id.chatMenu_check_Progress:
-                startActivity( new Intent(ChatActivity.this, SettingActivity.class));
-                return true;
 
-            case R.id.chatMenu_setting:
                 startActivity( new Intent(ChatActivity.this, CheckProgressActivity.class));
                 return true;
 
+            case R.id.chatMenu_profile:
+
+                startActivity( new Intent(ChatActivity.this, ProfileActivity.class));
+                return true;
+
             case R.id.chatMenu_end_chat:
+
                 EndChat();
                 return true;
+
             case R.id.chatMenu_sign_out:
+
                 FirebaseAuth.getInstance().signOut();
                 startActivity( new Intent(ChatActivity.this, MainActivity.class));
                 return true;
@@ -92,12 +99,14 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void InitUI() {
+
         //set up chat view
         LinearLayoutManager lManager = new LinearLayoutManager(getApplicationContext());
         lManager.setStackFromEnd(true);
         recyclerView = findViewById(R.id.recyclerView_chat);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(lManager);
+
         //set an empty adapter and update later.
         List<Chat> tempChat  = new ArrayList<>();
         MessageAdapter emptyAdapter = new MessageAdapter(ChatActivity.this, tempChat, "default");
@@ -115,7 +124,7 @@ public class ChatActivity extends AppCompatActivity {
                 if(!message.equals("")) {
                     SendMessage(fUser.getUid(), targetUserId, message);
                 }else{
-                    Toast.makeText(ChatActivity.this, "message cannot be blank",
+                    Toast.makeText(getApplicationContext(), "message cannot be blank",
                             Toast.LENGTH_SHORT).show();
                 }
                 inputEditText.setText("");
@@ -124,36 +133,47 @@ public class ChatActivity extends AppCompatActivity {
     }
     //get the the target user info
     private void GetTargetUser() {
+
         try {
             intent = getIntent();
             targetUserId = intent.getStringExtra("targetId");
             fUser = FirebaseAuth.getInstance().getCurrentUser();
-            targetUserRef = FirebaseDatabase.getInstance().getReference("Users").child(targetUserId);
+            targetUserRef = FirebaseDatabase.getInstance().getReference("Users")
+                    .child(targetUserId);
             targetUserRef.addValueEventListener(new ValueEventListener() {
+
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                     User user = dataSnapshot.getValue(User.class);
                     userName_view.setText(user.getUsername());
 
-                    if(user.getImageURL().equals("default")) {
+                    if(user.getImageUri().equals("default")) {
                         targetUser_image.setImageResource(R.mipmap.ic_launcher);
                     }
-
-                    ReadMessage(fUser.getUid(), targetUserId, user.getImageURL());
+                    else{
+                        Glide.with(ChatActivity.this).load(user.getImageUri())
+                                .into(targetUser_image);
+                    }
+                    ReadMessage(fUser.getUid(), targetUserId, user.getImageUri());
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) { }
             });
 
         }catch (Exception e) {
+
             Log.d("ChatActivity exception", e.toString());
             Toast.makeText(ChatActivity.this, "Sorry, Something goes wrong",
                     Toast.LENGTH_SHORT).show();
             startActivity(new Intent(ChatActivity.this, MainActivity.class));
         }
     }
+
     //End the chat
     private void EndChat() {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
         builder.setTitle("End Chat")
                 .setMessage("Are you sure to end chatting ?")
@@ -168,6 +188,7 @@ public class ChatActivity extends AppCompatActivity {
                     }});
         builder.create().show();
     }
+
     //UnMatch
     private void UnMatch() {
         try {
@@ -176,52 +197,95 @@ public class ChatActivity extends AppCompatActivity {
                     .getReference("Users").child(targetUserId);
             matchUserRef.child("isMatch").setValue("N");
             matchUserRef.child("matchId").setValue("N");
+
             //unMatch the current user
             DatabaseReference currentUserRef = FirebaseDatabase.getInstance()
                     .getReference("Users").child(fUser.getUid());
             currentUserRef.child("isMatch").setValue("N");
             currentUserRef.child("matchId").setValue("N");
+
             //TODO handle matches fail, consider transaction
             startActivity(new Intent(ChatActivity.this, HomeActivity.class));
 
         }catch (Exception e) {
+
             Log.d("UnMatchUser Exception", e.toString());
             Toast.makeText(ChatActivity.this, "UnMatch fails",
                     Toast.LENGTH_SHORT).show();
         }
     }
+
     //send message
     private void SendMessage( String sender, String receiver, String message) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-
         HashMap<String, Object> map = new HashMap<>();
+
         map.put("sender",sender);
         map.put("receiver",receiver);
         map.put("message",message);
+        map.put("isSeen", false);
+
         ref.child("Chats").push().setValue(map);
     }
+
     //read message by sender and receiver
     private void ReadMessage(final String myId,final String targetId,final String imageURL) {
 
             mChat = new ArrayList<>();
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Chats");
             ref.addValueEventListener(new ValueEventListener() {
+
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     mChat.clear();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                         Chat chat = snapshot.getValue(Chat.class);
 
-                        if((chat.getReceiver().equals(myId) && chat.getSender().equals(targetId)) ||
-                                (chat.getReceiver().equals(targetId) && chat.getSender().equals(myId)) ){
+                        if((chat.getReceiver().equals(myId) && chat.getSender().equals(targetId))
+                                || (chat.getReceiver().equals(targetId) && chat.getSender()
+                                .equals(myId)) ){
                             mChat.add(chat);
                         }
-                        messageAdapter = new MessageAdapter(ChatActivity.this, mChat, imageURL);
+                        messageAdapter = new MessageAdapter(ChatActivity.this,
+                                mChat, imageURL);
                         recyclerView.setAdapter(messageAdapter);
                     }
                 }
+
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) { }
+                public void onCancelled(@NonNull DatabaseError databaseError) {}
             });
+    }
+
+    private void SeenMessage() {
+        chatRef = FirebaseDatabase.getInstance().getReference("Chats");
+        seenListener = chatRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Chat chat = snapshot.getValue(Chat.class);
+                    if(chat.getReceiver().equals(fUser.getUid()) && chat.getSender().equals(targetUserId)) {
+                        HashMap<String, Object> map = new HashMap<>();
+                        map.put("isSeen", true);
+                        snapshot.getRef().updateChildren(map);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        chatRef.removeEventListener(seenListener);
     }
 }

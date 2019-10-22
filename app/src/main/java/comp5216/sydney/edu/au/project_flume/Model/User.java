@@ -4,14 +4,18 @@ public class User {
 
     private String id;
     private String username;
-    private String imageURL;
+    private String imageUri;
     private String matchId;
     private String isMatch;
+    private String status;
 
-    public User (String id, String username, String imageURL) {
+
+    public User (String id, String username, String imageURL, String status) {
             this.id = id;
             this.username = username;
-            this.imageURL = imageURL;
+            this.imageUri = imageURL;
+            this.status = status;
+
     }
     public User () {}
 
@@ -21,12 +25,16 @@ public class User {
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
 
-    public String getImageURL() { return imageURL; }
-    public void setImageURL(String imageURL) { this.imageURL = imageURL; }
+    public String getImageUri() { return imageUri; }
+    public void setImageUri(String imageUri) { this.imageUri = imageUri; }
 
     public String getMatchId() { return matchId; }
     public void setMatchId(String matchId) { this.matchId = matchId; }
 
     public String getIsMatch() { return isMatch; }
     public void setIsMatch(String isMatch) { this.isMatch = isMatch; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
 }

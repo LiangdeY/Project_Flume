@@ -7,9 +7,9 @@
         app:showAsAction="never"
         android:id="@+id/menu_sign_out"
         />
-    <item android:title="Setting"
+    <item android:title="Profile"
         app:showAsAction="never"
-        android:id="@+id/menu_setting"
+        android:id="@+id/menu_profile"
         />
 
 

@@ -4,11 +4,14 @@ import java.util.Date;
 
 public class Chat {
     private String sender, receiver, message;
+    private boolean isSeen;
 
-    public Chat(String sender, String receiver, String message) {
+    public Chat(String sender, String receiver, String message, boolean isSeen) {
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
+        this.isSeen = isSeen;
+
     }
     public Chat() { }
 
@@ -36,4 +39,7 @@ public class Chat {
         this.message = message;
     }
 
+    public boolean getIsSeen() { return isSeen; }
+
+    public void setIsSeen(boolean seen) { isSeen = seen; }
 }
