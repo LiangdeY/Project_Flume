@@ -75,9 +75,9 @@ public class HomeActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.menu_setting:
-                startActivity( new Intent(HomeActivity.this, SettingActivity.class));
-
-
+                Intent i = new Intent(HomeActivity.this, SettingActivity.class);
+                i.putExtra("from", "Home");
+                startActivity(i);
 
         }
         return false;
