@@ -6,29 +6,49 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e6e6e6"
+    android:background="@drawable/background"
     android:orientation="vertical"
-    tools:context=".ChatActivity">
+    android:fitsSystemWindows="true"
+    tools:context=".ChatActivity"
+    >
 
-
-    <TextView
-        android:id="@+id/username_view_chat"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Username"
-        android:textSize="30sp" />
+        android:padding="5dp"
+        android:id="@+id/username_linear_chat"
+        >
+        <TextView
+            android:id="@+id/username_view_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Username"
+            android:textSize="30sp" />
+        <ImageView
+            android:id="@+id/profile_image_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            />
+        <Button
+            android:id="@+id/endChatBtn_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="End Chat" />
+        <Button
+            android:id="@+id/settingBtn_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="setting" />
 
-    <ImageView
-        android:id="@+id/profile_image_chat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/username_view_chat"/>
+    </LinearLayout>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recyclerView_chat"
-        android:layout_below="@+id/username_view_chat"
+        android:layout_below="@+id/username_linear_chat"
         android:layout_above="@+id/input_layout_chat"
         >
 
@@ -61,6 +81,7 @@
         </ImageButton>
 
     </RelativeLayout>
+
 
 
 </RelativeLayout>

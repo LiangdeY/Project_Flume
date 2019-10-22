@@ -13,8 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".CheckProgressActivity" />
+        <activity android:name=".SetProgressActivity"></activity>
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".TargetUserProfileActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".ChatActivity" />
         <activity
@@ -27,6 +29,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".Notification.MyFirebaseService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT">
+                </action>
+            </intent-filter>
+        </service>
+
+        <service android:name=".Notification.MyFirebaseMessaging"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT">
+                </action>
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

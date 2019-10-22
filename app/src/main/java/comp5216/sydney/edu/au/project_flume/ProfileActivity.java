@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +41,7 @@ import comp5216.sydney.edu.au.project_flume.Model.User;
 public class ProfileActivity extends AppCompatActivity {
 
     ImageView profile_image;
-    TextView username;
+    EditText username;
     DatabaseReference currentUserRef;
     FirebaseUser fUser;
 
@@ -64,13 +65,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void InitUI() {
-        Intent i = getIntent();
-        final String fromActivity = i.getStringExtra("from");
-
+        
         cancelBtn = findViewById(R.id.cancelBtn_profile);
         applyBtn = findViewById(R.id.applyBtn_profile);
         profile_image = findViewById(R.id.profile_image_profile);
-        username = findViewById(R.id.username_fragment);
+        username = findViewById(R.id.username_profile);
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         currentUserRef = FirebaseDatabase.getInstance().getReference("Users")
                 .child(fUser.getUid());
@@ -103,28 +102,14 @@ public class ProfileActivity extends AppCompatActivity {
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(fromActivity.equals("Home")) {
-                    startActivity(new Intent(ProfileActivity.this,
-                            HomeActivity.class));
-                }
-                if(fromActivity.equals("Chat")) {
-                    startActivity(new Intent(ProfileActivity.this,
-                            ChatActivity.class));
-                }
+                startActivity( new Intent( ProfileActivity.this, SettingActivity.class));
             }
         });
         applyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SaveChanges();
-                if(fromActivity.equals("Home")) {
-                    startActivity(new Intent(ProfileActivity.this,
-                            HomeActivity.class));
-                }
-                if(fromActivity.equals("Chat")) {
-                    startActivity(new Intent(ProfileActivity.this,
-                            ChatActivity.class));
-                }
+                startActivity( new Intent( ProfileActivity.this, SettingActivity.class));
             }
         });
 

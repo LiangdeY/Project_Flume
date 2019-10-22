@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import comp5216.sydney.edu.au.project_flume.Model.User;
 
@@ -37,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
     TextView username, searchText;
     FirebaseUser user;
     DatabaseReference dbReference;
-    Button matchBtn;
+    Button matchBtn, settingBtn;
     List<User> mUsers;
     FirebaseUser mFirebaseUser;
     User currentUserModel;
@@ -64,27 +65,6 @@ public class HomeActivity extends AppCompatActivity {
         CheckMatch();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected (MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_sign_out:
-                FirebaseAuth.getInstance().signOut();
-                startActivity( new Intent(HomeActivity.this, MainActivity.class));
-                finish();
-                return true;
-            case R.id.menu_profile:
-                Intent i = new Intent(HomeActivity.this, ProfileActivity.class);
-                i.putExtra("from", "Home");
-                startActivity(i);
-
-        }
-        return false;
-    }
 
     private void InitUI(){
         //get user info
@@ -92,6 +72,7 @@ public class HomeActivity extends AppCompatActivity {
         username = findViewById(R.id.username_home);
         searchText = findViewById(R.id.searching_textview_Home);
         matchBtn = findViewById(R.id.matchBtn_home);
+        settingBtn = findViewById(R.id.settingBtn_home);
 
         matchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +85,14 @@ public class HomeActivity extends AppCompatActivity {
                     matchBtn.setText("Match");
                     searchText.setText("Click button to start matching");
                 }
+            }
+        });
+        settingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, SettingActivity.class);
+                i.putExtra("from", "Home");
+                startActivity(i);
             }
         });
 

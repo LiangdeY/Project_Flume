@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
+import comp5216.sydney.edu.au.project_flume.HomeActivity;
 import comp5216.sydney.edu.au.project_flume.Model.Chat;
 import comp5216.sydney.edu.au.project_flume.ProfileActivity;
 import comp5216.sydney.edu.au.project_flume.R;
@@ -59,6 +61,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void onBindViewHolder(@NonNull MessageAdapter.ViewHolder holder, int position) {
         Chat chat  = mChat.get(position);
         holder.message.setText(chat.getMessage());
+        holder.user_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "SMD",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
         if(imageURL.equals("default")){
             holder.user_image.setImageResource(R.mipmap.ic_launcher);

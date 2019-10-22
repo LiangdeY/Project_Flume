@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SettingActivity"
+    android:gravity="center"
+    >
+
+    <Button
+        android:id="@+id/backBtn_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Back" />
+    <Button
+        android:id="@+id/set_progress_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Progress Setting" />
+    <Button
+        android:id="@+id/profile_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Profile Setting" />
+    <Button
+        android:id="@+id/sign_out_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign Out" />
+</LinearLayout>

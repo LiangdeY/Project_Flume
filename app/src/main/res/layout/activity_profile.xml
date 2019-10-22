@@ -7,34 +7,94 @@
     android:padding="8dp"
     tools:context=".ProfileActivity">
 
-
-
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Profile"
             android:textSize="24sp"
-
             />
+    <ImageView
+        android:id="@+id/profile_image_profile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:src="@mipmap/ic_launcher"
+        />
 
-        <ImageView
-            android:id="@+id/profile_image_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
-             />
 
+    <LinearLayout
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_image_profile"
+        android:id="@+id/username_linear_profile"
+        >
         <TextView
-            android:id="@+id/username_fragment"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/profile_image_profile"
+            android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:text="Username"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:id="@+id/username_profile"
+            ></EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username_linear_profile"
+        android:id="@+id/change_password_linear"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="Change password"
+            android:textSize="18sp"
+            />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:id="@+id/change_password_profile"
+            ></EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/change_password_linear"
+        >
+        <TextView
+            android:id="@+id/change_password"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="Confirm password"
+            android:textSize="18sp"
+            />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            ></EditText>
+    </LinearLayout>
+
+
+
+
 
     <Button
         android:id="@+id/cancelBtn_profile"
@@ -43,7 +103,6 @@
         android:text="Cancel"
         android:layout_alignParentBottom="true"
         />
-
     <Button
         android:id="@+id/applyBtn_profile"
         android:layout_width="wrap_content"

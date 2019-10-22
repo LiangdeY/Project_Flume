@@ -45,9 +45,15 @@
         android:layout_height="wrap_content"
         android:text="Match"
         android:gravity="center"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="100dp"
         />
 
+    <Button
+        android:id="@+id/settingBtn_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Setting"
+        />
 
 
 </LinearLayout>
