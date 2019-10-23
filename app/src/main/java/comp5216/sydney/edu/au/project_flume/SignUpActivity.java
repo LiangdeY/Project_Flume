@@ -143,13 +143,9 @@ public class SignUpActivity extends AppCompatActivity {
                                                 Intent.FLAG_ACTIVITY_NEW_TASK);
                                         pDialog.dismiss();
                                         startActivity(i);
-<<<<<<< HEAD
-                                        Log.w("", "createUserWithEmail:Success",
-                                                task.getException());
-=======
+
                                         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                                         Log.w("", "createUserWithEmail:Success", task.getException());
->>>>>>> 132a9b4fbb9041524293a3ff31008d50a23df3fe
                                         finish();
                                     }
                                     else{

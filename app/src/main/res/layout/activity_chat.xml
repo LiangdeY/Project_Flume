@@ -61,7 +61,6 @@
             style="@style/Widget.AppCompat.Button.Borderless"/>
 
     </LinearLayout>
-<<<<<<< HEAD
     <ProgressBar
         android:id="@+id/progressBar_chat"
         style="?android:attr/progressBarStyleHorizontal"
@@ -69,9 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/username_linear_chat"
         />
-=======
     </androidx.appcompat.widget.Toolbar>
->>>>>>> 132a9b4fbb9041524293a3ff31008d50a23df3fe
 
 
 
@@ -79,11 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recyclerView_chat"
-<<<<<<< HEAD
-        android:layout_below="@+id/progressBar_chat"
-=======
         android:layout_below="@+id/toolbar_chat"
->>>>>>> 132a9b4fbb9041524293a3ff31008d50a23df3fe
         android:layout_above="@+id/input_layout_chat"
         >
 
