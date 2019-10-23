@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -34,14 +35,14 @@ import comp5216.sydney.edu.au.project_flume.Model.User;
 
 public class HomeActivity extends AppCompatActivity {
 
-    ImageView profile_image;
-    TextView username, searchText;
+    TextView username;
     FirebaseUser user;
     DatabaseReference dbReference;
     Button matchBtn, settingBtn;
     List<User> mUsers;
     FirebaseUser mFirebaseUser;
     User currentUserModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +69,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void InitUI(){
         //get user info
-        profile_image = findViewById(R.id.profile_image);
         username = findViewById(R.id.username_home);
-        searchText = findViewById(R.id.searching_textview_Home);
         matchBtn = findViewById(R.id.matchBtn_home);
         settingBtn = findViewById(R.id.settingBtn_home);
 
@@ -79,11 +78,9 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(matchBtn.getText().toString().equals("Match")) {
                     matchBtn.setText("Cancel");
-                    searchText.setText("Searching");
                     MatchUser();
                 } else if(matchBtn.getText().toString().equals("Cancel")) {
                     matchBtn.setText("Match");
-                    searchText.setText("Click button to start matching");
                 }
             }
         });
@@ -104,19 +101,11 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                searchText.setText("Click button to start matching");
                 //
                 currentUserModel = dataSnapshot.getValue(User.class);
                 username.setText(currentUserModel.getUsername());
                 Toast.makeText(HomeActivity.this, "Welcome back, " +
                         currentUserModel.getUsername(), Toast.LENGTH_SHORT).show();
-                if(currentUserModel.getImageUri().equals("default")) {
-                    profile_image.setImageResource(R.mipmap.ic_launcher);
-                }
-                else{
-                    Glide.with(getApplicationContext()).load(currentUserModel.getImageUri())
-                            .into(profile_image);
-                }
             }
 
             @Override
@@ -158,13 +147,13 @@ public class HomeActivity extends AppCompatActivity {
             //send the matched user id to the chat activity
             Intent intent = new Intent(HomeActivity.this, ChatActivity.class);
             intent.putExtra("targetId", unMatchUser.get(index).getId());
+            findViewById(R.id.spin_kit).setVisibility(View.GONE);
             startActivity(intent);
 
         }catch (Exception e) {
             Log.d("matchUser Exception", e.toString());
 
             matchBtn.setText("Match");
-            searchText.setText("Click button to start matching");
             Toast.makeText(HomeActivity.this, "Sorry, We can't find a match",
                     Toast.LENGTH_SHORT).show();
 

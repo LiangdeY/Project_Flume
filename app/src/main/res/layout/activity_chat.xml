@@ -31,12 +31,10 @@
 
         <Button
             android:id="@+id/endChatBtn_chat"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:padding="5dp"
-            android:layout_margin="5dp"
-            android:background="@drawable/ic_action_close"
-            style="@style/Widget.AppCompat.Button.Borderless"/>
+            android:layout_width="35dp"
+            android:layout_height="33dp"
+            android:background="@drawable/endchat"
+            style="@style/Widget.AppCompat.Button.Borderless" />
 
         <TextView
             android:id="@+id/username_view_chat"
@@ -45,7 +43,7 @@
             android:layout_weight="1"
             android:drawablePadding="0dp"
             android:gravity="center_vertical|start"
-            android:paddingStart="16dp"
+            android:paddingStart="25dp"
             android:paddingEnd="4dp"
             android:text="Username"
             android:fontFamily="@font/dancingscript_regular"
@@ -77,7 +75,7 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -87,8 +85,13 @@
 
         <EditText
             android:id="@+id/input_chat"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="40dp"
+            android:layout_weight="1"
+            android:drawablePadding="0dp"
+            android:gravity="center_vertical|start"
+            android:paddingStart="16dp"
+            android:paddingEnd="4dp"
             android:layout_toStartOf="@+id/send_Btn_chat"
             android:background="@color/fui_transparent"
             android:hint="Message.."
@@ -99,11 +102,9 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:id="@+id/send_Btn_chat"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:background="@drawable/ic_send_view"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
 

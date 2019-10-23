@@ -22,8 +22,6 @@
             android:alpha=".70"
             android:src="@drawable/title_flume" />
 
-
-
         <ImageView
             android:id="@+id/line1"
             android:layout_width="@dimen/_48sdp"
