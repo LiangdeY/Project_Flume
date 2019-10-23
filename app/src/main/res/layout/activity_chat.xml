@@ -21,53 +21,55 @@
         android:layout_alignParentTop="true"
         android:background="#08020511"
         >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        >
-
-        <Button
-            android:id="@+id/endChatBtn_chat"
-            android:layout_width="27dp"
-            android:layout_height="27dp"
-            android:background="@drawable/ic_action_close"
-            style="@style/Widget.AppCompat.Button.Borderless" />
-
-        <TextView
-            android:id="@+id/username_view_chat"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawablePadding="0dp"
-            android:gravity="center_vertical|start"
-            android:paddingStart="25dp"
-            android:paddingEnd="4dp"
-            android:text="Username"
-            android:fontFamily="@font/dancingscript_regular"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
-            android:textSize="20sp" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            >
 
-        <Button
-            android:id="@+id/settingBtn_chat"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/menu"
-            android:padding="5dp"
-            style="@style/Widget.AppCompat.Button.Borderless"/>
+            <Button
+                android:id="@+id/endChatBtn_chat"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:background="@drawable/ic_action_close"
+                style="@style/Widget.AppCompat.Button.Borderless" />
 
-    </LinearLayout>
-    <ProgressBar
-        android:id="@+id/progressBar_chat"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/username_linear_chat"
-        />
+            <TextView
+                android:id="@+id/username_view_chat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="0dp"
+                android:gravity="center_vertical|start"
+                android:paddingStart="25dp"
+                android:paddingEnd="4dp"
+                android:text="Username"
+                android:fontFamily="@font/dancingscript_regular"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/settingBtn_chat"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/menu"
+                android:padding="5dp"
+                style="@style/Widget.AppCompat.Button.Borderless"/>
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar_chat"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/username_linear_chat"
+            />
+
     </androidx.appcompat.widget.Toolbar>
 
 
