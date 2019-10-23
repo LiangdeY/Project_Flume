@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +32,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +45,7 @@ import comp5216.sydney.edu.au.project_flume.Model.Chat;
 import comp5216.sydney.edu.au.project_flume.Model.User;
 import comp5216.sydney.edu.au.project_flume.Notification.Client;
 import comp5216.sydney.edu.au.project_flume.Notification.Data;
+import comp5216.sydney.edu.au.project_flume.Notification.MyFirebaseService;
 import comp5216.sydney.edu.au.project_flume.Notification.MyRespond;
 import comp5216.sydney.edu.au.project_flume.Notification.NotificationSender;
 import comp5216.sydney.edu.au.project_flume.Notification.Token;
@@ -59,10 +64,12 @@ public class ChatActivity extends AppCompatActivity {
     FirebaseUser fUser;
     DatabaseReference targetUserRef, chatRef;
     Intent intent;
+    MyFirebaseService myFirebaseService;
 
     Boolean notify = false;
     APIService apiService;
     String targetUserId;
+    String token;
 
     MessageAdapter messageAdapter;
     List<Chat> mChat;
@@ -72,13 +79,15 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        //TODO check if both sides stay matching
         InitUI();
 
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
 
         GetTargetUser();
+        //TODO check if both sides stay matching
+        CheckMatching();
         SeenMessage();
+        myFirebaseService = new MyFirebaseService();
     }
 
     private void InitUI() {
@@ -237,6 +246,26 @@ public class ChatActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 if(notify){
+                    FirebaseInstanceId.getInstance().getInstanceId()
+                            .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        Log.w("", "getInstanceId failed", task.getException());
+                                        return;
+                                    }
+
+                                    // Get new Instance ID token
+                                    token = task.getResult().getToken();
+
+                                    // Log and toast
+                                    // String msg = getString(R.string.msg_token_fmt, token);
+                                    Log.d("", token);
+                                    Toast.makeText(ChatActivity.this, token, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                    myFirebaseService.onNewToken(token);
+
                     sendNotification(receiver, user.getUsername(), message);
                 }
                 notify = false;
@@ -252,6 +281,8 @@ public class ChatActivity extends AppCompatActivity {
     private void sendNotification(String receiver, final String username, final String message){
         DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
         Query query = tokens.orderByKey().equalTo(receiver);
+        Toast.makeText(ChatActivity.this, "notification 4",
+                Toast.LENGTH_SHORT).show();
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -261,12 +292,17 @@ public class ChatActivity extends AppCompatActivity {
                             + ": " + message, "New Message", targetUserId);
 
                     NotificationSender sender = new NotificationSender(data, token.getToken());
-
+                    Toast.makeText(ChatActivity.this, "notification 3",
+                            Toast.LENGTH_SHORT).show();
                     apiService.sendNotification(sender).enqueue(new Callback<MyRespond>() {
                         @Override
                         public void onResponse(Call<MyRespond> call, Response<MyRespond> response) {
                             if(response.code() == 200){
+                                Toast.makeText(ChatActivity.this, "notification 1",
+                                        Toast.LENGTH_SHORT).show();
                                 if(response.body().success != 1) {
+                                    Toast.makeText(ChatActivity.this, "notification 2",
+                                            Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(ChatActivity.this, "notification Failed",
                                             Toast.LENGTH_SHORT).show();
@@ -285,6 +321,34 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
+    }
+    private void CheckMatching(){
+        DatabaseReference ref =  FirebaseDatabase.getInstance().getReference("Users")
+                .child(fUser.getUid());
+        ref.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                if(user.getIsMatch().equals("N")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                    builder.setTitle("Conversation ends.")
+                            .setMessage("Ops, Target user ended conversation")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    startActivity(new Intent(ChatActivity.this,
+                                            HomeActivity.class));
+                                }
+                            });
+                    builder.create().show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+
     }
 
     //read message by sender and receiver
@@ -308,6 +372,7 @@ public class ChatActivity extends AppCompatActivity {
                         messageAdapter = new MessageAdapter(ChatActivity.this,
                                 mChat, imageURL);
                         recyclerView.setAdapter(messageAdapter);
+
                     }
                 }
 
