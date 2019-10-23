@@ -3,44 +3,67 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_chat"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:orientation="vertical"
+    android:background="@drawable/background_2"
     android:fitsSystemWindows="true"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".ChatActivity"
     >
 
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#08020511"
+        >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:id="@+id/username_linear_chat"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="1"
         >
-        <TextView
-            android:id="@+id/username_view_chat"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Username"
-            android:textSize="30sp" />
-        <ImageView
-            android:id="@+id/profile_image_chat"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            />
+
         <Button
             android:id="@+id/endChatBtn_chat"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="End Chat" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/ic_action_close"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+        <TextView
+            android:id="@+id/username_view_chat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="0dp"
+            android:gravity="center_vertical|start"
+            android:paddingStart="16dp"
+            android:paddingEnd="4dp"
+            android:text="Username"
+            android:fontFamily="@font/dancingscript_regular"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textSize="20sp" />
+
         <Button
             android:id="@+id/settingBtn_chat"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="setting" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/menu"
+            android:padding="5dp"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
 
     </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
 
 
 
@@ -48,7 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recyclerView_chat"
-        android:layout_below="@+id/username_linear_chat"
+        android:layout_below="@+id/toolbar_chat"
         android:layout_above="@+id/input_layout_chat"
         >
 
@@ -58,7 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#fff"
+        android:background="#1A000000"
         android:padding="5dp"
         android:id="@+id/input_layout_chat">
 
@@ -66,19 +89,19 @@
             android:id="@+id/input_chat"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_toLeftOf="@+id/send_Btn_chat"
+            android:layout_toStartOf="@+id/send_Btn_chat"
             android:background="@color/fui_transparent"
-            android:hint="Message.."></EditText>
+            android:hint="Message.."
+            android:textColorHint="#9C9A9A"
+            android:textColor="#ffffff"/>
+
         <ImageButton
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:id="@+id/send_Btn_chat"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/ic_send_view"
-            >
-
-        </ImageButton>
+            android:background="@drawable/ic_send_view"/>
 
     </RelativeLayout>
 

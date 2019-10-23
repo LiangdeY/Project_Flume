@@ -7,7 +7,11 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:fitsSystemWindows="true"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".MainActivity">
+
 
         <ImageView
             android:id="@+id/appTitle"
@@ -22,7 +26,7 @@
 
         <ImageView
             android:id="@+id/line1"
-            android:layout_width="@dimen/_54sdp"
+            android:layout_width="@dimen/_48sdp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/appTitle"
             android:layout_toStartOf="@+id/logInHint"
@@ -39,14 +43,14 @@
             android:layout_marginTop="@dimen/_26sdp"
             android:layout_centerHorizontal="true"
             android:textColor="#ffffff"
-            android:textSize="@dimen/_14ssp"
+            android:textSize="@dimen/_13ssp"
             android:fontFamily="@font/sfuid_thin"
             android:alpha=".80"
             android:text="Log in with Email"/>
 
         <ImageView
             android:id="@+id/line2"
-            android:layout_width="@dimen/_54sdp"
+            android:layout_width="@dimen/_48sdp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/appTitle"
             android:layout_toEndOf="@+id/logInHint"
