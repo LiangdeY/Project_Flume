@@ -46,7 +46,9 @@
                 android:paddingEnd="5dp"
                 android:text="Setting"
                 android:textColor="#ffffff"
-                android:textSize="22sp" />
+                android:textSize="20sp"
+                android:fontFamily="@font/sfuid_regular"
+                android:textStyle="bold"/>
 
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
@@ -54,23 +56,42 @@
     <Button
         android:id="@+id/set_progress_setting"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_below="@id/toolbar_setting"
-        android:text="Progress Setting" />
+        android:layout_marginTop="2dp"
+        android:text="Intimacy Setting"
+        android:background="#33082A8B"
+        android:fontFamily="@font/sfuid_thin"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
+        android:gravity="left|center_vertical"
+        android:paddingStart="30dp"
+        android:drawableEnd="@drawable/arrow"
+        android:paddingEnd="20dp" />
 
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@id/set_progress_setting"
-        android:background="@android:color/white" />
+        android:background="#1AA1A1A3" />
 
     <Button
         android:id="@+id/profile_setting"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_below="@id/line"
-        android:text="Profile Setting" />
+        android:text="Profile Setting"
+        android:background="#33082A8B"
+        android:fontFamily="@font/sfuid_thin"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
+        android:gravity="left|center_vertical"
+        android:paddingStart="30dp"
+        android:drawableEnd="@drawable/arrow"
+        android:paddingEnd="20dp" />
 
     <Button
         android:id="@+id/sign_out_setting"
