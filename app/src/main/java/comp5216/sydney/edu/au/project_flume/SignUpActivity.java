@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -42,8 +43,10 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity( new Intent(SignUpActivity.this, MainActivity.class) );
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
+
     }
 
     private void initUI() {
@@ -73,6 +76,36 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         } );
+
+        email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(MainActivity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
+
+        username.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(MainActivity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
+
+       password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(MainActivity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
     }
 
     private void signUp(final String username, String email, String password) {
@@ -110,8 +143,13 @@ public class SignUpActivity extends AppCompatActivity {
                                                 Intent.FLAG_ACTIVITY_NEW_TASK);
                                         pDialog.dismiss();
                                         startActivity(i);
+<<<<<<< HEAD
                                         Log.w("", "createUserWithEmail:Success",
                                                 task.getException());
+=======
+                                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                                        Log.w("", "createUserWithEmail:Success", task.getException());
+>>>>>>> 132a9b4fbb9041524293a3ff31008d50a23df3fe
                                         finish();
                                     }
                                     else{

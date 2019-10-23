@@ -56,7 +56,6 @@ import retrofit2.Response;
 
 public class ChatActivity extends AppCompatActivity {
 
-    ImageView targetUser_image;
     TextView userName_view;
     ImageButton sendBtn;
     EditText inputEditText;
@@ -85,6 +84,16 @@ public class ChatActivity extends AppCompatActivity {
 
         InitUI();
 
+        inputEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(MainActivity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
+
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
 
         GetTargetUser();
@@ -92,8 +101,6 @@ public class ChatActivity extends AppCompatActivity {
         SeenMessage();
         myFirebaseMessaging = new MyFirebaseMessaging();
         InitProgressBar();
-        //check the pool to see if there is a progree bar matches both user
-        //create one if there isnt.
         //load setting if there is.
     }
     private  void InitProgressBar() {
@@ -176,7 +183,6 @@ public class ChatActivity extends AppCompatActivity {
         MessageAdapter emptyAdapter = new MessageAdapter(ChatActivity.this, tempChat, "default");
         recyclerView.setAdapter(emptyAdapter);
 
-        targetUser_image = findViewById(R.id.profile_image_chat);
         userName_view = findViewById(R.id.username_view_chat);
         sendBtn = findViewById(R.id.send_Btn_chat);
         inputEditText = findViewById(R.id.input_chat);
@@ -241,13 +247,6 @@ public class ChatActivity extends AppCompatActivity {
                     targetUserModel = dataSnapshot.getValue(User.class);
                     userName_view.setText(targetUserModel.getUsername());
 
-                    if(targetUserModel.getImageUri().equals("default")) {
-                        targetUser_image.setImageResource(R.mipmap.ic_launcher);
-                    }
-                    else{
-                        Glide.with(ChatActivity.this).load(targetUserModel.getImageUri())
-                                .into(targetUser_image);
-                    }
                     ReadMessage(fUser.getUid(), targetUserId, targetUserModel.getImageUri());
                 }
 

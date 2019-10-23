@@ -65,8 +65,30 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity( new Intent(MainActivity.this, SignUpActivity.class) );
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
+
+        email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(MainActivity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
+
+        password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(MainActivity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
+
     }
 //    @Override
 //    protected void onStart() {
@@ -106,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
                                         Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(i);
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 finish();
                             }else {
                                 pDialog.dismiss();
