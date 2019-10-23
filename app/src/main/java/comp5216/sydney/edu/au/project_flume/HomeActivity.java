@@ -100,8 +100,6 @@ public class HomeActivity extends AppCompatActivity {
                 //
                 currentUserModel = dataSnapshot.getValue(User.class);
                 username.setText(currentUserModel.getUsername());
-                Toast.makeText(HomeActivity.this, "Welcome back, " +
-                        currentUserModel.getUsername(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -191,7 +189,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void CheckMatch() {
 
-        dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        dbReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                  currentUserModel = dataSnapshot.getValue(User.class);

@@ -71,7 +71,6 @@ public class ChatActivity extends AppCompatActivity {
     String targetUserId;
     String token;
     User targetUserModel;
-    boolean findBar = false;
 
 
     MessageAdapter messageAdapter;
@@ -109,63 +108,82 @@ public class ChatActivity extends AppCompatActivity {
                 .getReference("ProgressBar");
         //create a progress bar if the database is empty
 
+        if(progressBarRef  == null) {
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("setter",targetUserId);
+            map.put("viewer", fUser.getUid());
+            map.put("max", targetUserModel.getProgressMax());
+            map.put("progress", "0");
+            ref.child("ProgressBar").push().setValue(map);
+
+            Toast.makeText(getApplicationContext(), "progressBarRef = null",
+                    Toast.LENGTH_SHORT).show();
+
+        }else{
+            Toast.makeText(getApplicationContext(), "progressBarRef not = null",
+                    Toast.LENGTH_SHORT).show();
             progressBarRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                    boolean isFould = false;
+                    MyProgressBar pBar;
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()){
 
-                        MyProgressBar pBar = snapshot.getValue(MyProgressBar.class);
-                        Log.d("getSetter = ",pBar.getSetter());
-                        Log.d("targetUserId = ",targetUserId);
-                        Log.d("pBar.getViewer() = ",pBar.getViewer());
-                        Log.d("fUser.getUid() = ",fUser.getUid());
+                         pBar = snapshot.getValue(MyProgressBar.class);
+                         if(pBar != null) {
+                             if(pBar.getSetter().equals(targetUserId) && pBar.getViewer().equals(fUser.getUid())){
 
+                                 targetUserPBRef = snapshot.getRef();
+                                 Log.d("targetUserPBRef", targetUserPBRef.toString());
 
-                        //update progress bar if one is found
-                        if(pBar.getSetter() == targetUserId && pBar.getViewer() == fUser.getUid()){
-                            Log.d("SMD ", "SMD");
-
-                            targetUserPBRef = snapshot.getRef();
-                            if(Integer.parseInt(pBar.getProgress()) <= Integer.parseInt(pBar.getMax())) {
-                                targetUserPrograssBar.setMax(Integer.parseInt(pBar.getMax()));
-                                targetUserPrograssBar.setProgress(Integer.parseInt(pBar.getProgress()));
-                            }else{
-                                targetUserRef.child("unLocked").setValue("Y");
-                                AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                                builder.setTitle("Congratulations!")
-                                        .setMessage("User profile unlocked")
-                                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                Intent intent = new Intent(ChatActivity.this, ShowPhotoActivity.class);
-                                                intent.putExtra("targetUserId", targetUserId);
-                                                startActivity(intent);
-                                            }
-                                        });
-                                builder.create().show();
-
-                            }
-                            findBar = true;
-                        }
+                                 if(Integer.parseInt(pBar.getProgress()) <= Integer.parseInt(pBar.getMax())) {
+                                     targetUserPrograssBar.setMax(Integer.parseInt(pBar.getMax()));
+                                     targetUserPrograssBar.setProgress(Integer.parseInt(pBar.getProgress()));
+                                 }else{
+                                     targetUserRef.child("unLocked").setValue("Y");
+                                     AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                                     builder.setTitle("Congratulations!")
+                                             .setMessage("User profile unlocked")
+                                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                                 @Override
+                                                 public void onClick(DialogInterface dialogInterface, int i) {
+                                                     Intent intent = new Intent(ChatActivity.this, ShowPhotoActivity.class);
+                                                     intent.putExtra("targetUserId", targetUserId);
+                                                     startActivity(intent);
+                                                 }
+                                             });
+                                     builder.create().show();
+                                 }
+                                 isFould = true;
+                             }
+                         }
                     }
-                    Log.d("findBar = ", String.valueOf(findBar));
-                    //create a new one if no progressbar found
-//                    if(!findBar){
-//                        HashMap<String, String> map = new HashMap<>();
-//                        map.put("setter",targetUserId);
-//                        map.put("max", targetUserModel.getProgressMax());
-//                        map.put("viewer", fUser.getUid());
-//                        map.put("progress", "0");
-//
-//                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-//                        ref.child("ProgressBar").push().setValue(map);
-//                    }
+                    if(!isFould){
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                        HashMap<String, Object> map = new HashMap<>();
+                        map.put("setter",targetUserId);
+                        map.put("viewer", fUser.getUid());
+                        map.put("max", targetUserModel.getProgressMax());
+                        map.put("progress", "0");
+                        ref.child("ProgressBar").push().setValue(map);
+
+                        Toast.makeText(getApplicationContext(), "progressbar created",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {}
             });
+
+        }
+
+
+
+
+
 
     }
 

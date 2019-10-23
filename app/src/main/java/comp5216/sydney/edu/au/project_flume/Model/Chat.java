@@ -1,6 +1,5 @@
 package comp5216.sydney.edu.au.project_flume.Model;
 
-import java.util.Date;
 
 public class Chat {
     private String sender, receiver, message;
