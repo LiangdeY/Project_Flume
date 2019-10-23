@@ -3,9 +3,11 @@ package comp5216.sydney.edu.au.project_flume;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,12 +27,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 
         auth = FirebaseAuth.getInstance();
         email = findViewById(R.id.email_login);
         password = findViewById(R.id.email_sign_up);
+        email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(
+                            MainActivity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
+        password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(
+                            MainActivity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
 
         login = findViewById(R.id.login_main);
         signUp = findViewById(R.id.signUp_main);
@@ -63,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     private void Login() {
+        final ProgressDialog pDialog = new ProgressDialog(MainActivity.this);
+        pDialog.setMessage("Logging..");
+        pDialog.show();
         String sEmail= email.getText().toString();
         String sPassword = password.getText().toString();
 
@@ -75,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()) {
+                                pDialog.dismiss();
                                 Intent i = new Intent(MainActivity.this,
                                         HomeActivity.class);
                                 i.putExtra("login", "1");
@@ -83,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(i);
                                 finish();
                             }else {
+                                pDialog.dismiss();
                                 Toast.makeText(MainActivity.this,
                                         "Authentication Fail!", Toast.LENGTH_SHORT).show();
                             }

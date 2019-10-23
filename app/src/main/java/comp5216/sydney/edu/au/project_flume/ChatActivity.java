@@ -6,18 +6,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,10 +42,11 @@ import java.util.List;
 import comp5216.sydney.edu.au.project_flume.Adapter.MessageAdapter;
 import comp5216.sydney.edu.au.project_flume.Fragments.APIService;
 import comp5216.sydney.edu.au.project_flume.Model.Chat;
+import comp5216.sydney.edu.au.project_flume.Model.MyProgressBar;
 import comp5216.sydney.edu.au.project_flume.Model.User;
 import comp5216.sydney.edu.au.project_flume.Notification.Client;
 import comp5216.sydney.edu.au.project_flume.Notification.Data;
-import comp5216.sydney.edu.au.project_flume.Notification.MyFirebaseService;
+import comp5216.sydney.edu.au.project_flume.Notification.MyFirebaseMessaging;
 import comp5216.sydney.edu.au.project_flume.Notification.MyRespond;
 import comp5216.sydney.edu.au.project_flume.Notification.NotificationSender;
 import comp5216.sydney.edu.au.project_flume.Notification.Token;
@@ -62,14 +63,17 @@ public class ChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     Button endChatBtn, settingBtn;
     FirebaseUser fUser;
-    DatabaseReference targetUserRef, chatRef;
+    DatabaseReference targetUserRef, chatRef, targetUserPBRef;
     Intent intent;
-    MyFirebaseService myFirebaseService;
-
+    MyFirebaseMessaging myFirebaseMessaging;
+    ProgressBar targetUserPrograssBar;
     Boolean notify = false;
     APIService apiService;
     String targetUserId;
     String token;
+    User targetUserModel;
+    boolean findBar = false;
+
 
     MessageAdapter messageAdapter;
     List<Chat> mChat;
@@ -84,10 +88,78 @@ public class ChatActivity extends AppCompatActivity {
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
 
         GetTargetUser();
-        //TODO check if both sides stay matching
         CheckMatching();
         SeenMessage();
-        myFirebaseService = new MyFirebaseService();
+        myFirebaseMessaging = new MyFirebaseMessaging();
+        InitProgressBar();
+        //check the pool to see if there is a progree bar matches both user
+        //create one if there isnt.
+        //load setting if there is.
+    }
+    private  void InitProgressBar() {
+        targetUserPrograssBar = findViewById(R.id.progressBar_chat);
+        DatabaseReference progressBarRef = FirebaseDatabase.getInstance()
+                .getReference("ProgressBar");
+        //create a progress bar if the database is empty
+
+            progressBarRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+
+                        MyProgressBar pBar = snapshot.getValue(MyProgressBar.class);
+                        Log.d("getSetter = ",pBar.getSetter());
+                        Log.d("targetUserId = ",targetUserId);
+                        Log.d("pBar.getViewer() = ",pBar.getViewer());
+                        Log.d("fUser.getUid() = ",fUser.getUid());
+
+
+                        //update progress bar if one is found
+                        if(pBar.getSetter() == targetUserId && pBar.getViewer() == fUser.getUid()){
+                            Log.d("SMD ", "SMD");
+
+                            targetUserPBRef = snapshot.getRef();
+                            if(Integer.parseInt(pBar.getProgress()) <= Integer.parseInt(pBar.getMax())) {
+                                targetUserPrograssBar.setMax(Integer.parseInt(pBar.getMax()));
+                                targetUserPrograssBar.setProgress(Integer.parseInt(pBar.getProgress()));
+                            }else{
+                                targetUserRef.child("unLocked").setValue("Y");
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                                builder.setTitle("Congratulations!")
+                                        .setMessage("User profile unlocked")
+                                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                Intent intent = new Intent(ChatActivity.this, ShowPhotoActivity.class);
+                                                intent.putExtra("targetUserId", targetUserId);
+                                                startActivity(intent);
+                                            }
+                                        });
+                                builder.create().show();
+
+                            }
+                            findBar = true;
+                        }
+                    }
+                    Log.d("findBar = ", String.valueOf(findBar));
+                    //create a new one if no progressbar found
+//                    if(!findBar){
+//                        HashMap<String, String> map = new HashMap<>();
+//                        map.put("setter",targetUserId);
+//                        map.put("max", targetUserModel.getProgressMax());
+//                        map.put("viewer", fUser.getUid());
+//                        map.put("progress", "0");
+//
+//                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+//                        ref.child("ProgressBar").push().setValue(map);
+//                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {}
+            });
+
     }
 
     private void InitUI() {
@@ -141,6 +213,16 @@ public class ChatActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        inputEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(MainActivity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
     }
     //get the the target user info
     private void GetTargetUser() {
@@ -156,17 +238,17 @@ public class ChatActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    User user = dataSnapshot.getValue(User.class);
-                    userName_view.setText(user.getUsername());
+                    targetUserModel = dataSnapshot.getValue(User.class);
+                    userName_view.setText(targetUserModel.getUsername());
 
-                    if(user.getImageUri().equals("default")) {
+                    if(targetUserModel.getImageUri().equals("default")) {
                         targetUser_image.setImageResource(R.mipmap.ic_launcher);
                     }
                     else{
-                        Glide.with(ChatActivity.this).load(user.getImageUri())
+                        Glide.with(ChatActivity.this).load(targetUserModel.getImageUri())
                                 .into(targetUser_image);
                     }
-                    ReadMessage(fUser.getUid(), targetUserId, user.getImageUri());
+                    ReadMessage(fUser.getUid(), targetUserId, targetUserModel.getImageUri());
                 }
 
                 @Override
@@ -251,22 +333,18 @@ public class ChatActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<InstanceIdResult> task) {
                                     if (!task.isSuccessful()) {
-                                        Log.w("", "getInstanceId failed", task.getException());
+                                        Log.w("", "getInstanceId failed",
+                                                task.getException());
                                         return;
                                     }
 
                                     // Get new Instance ID token
                                     token = task.getResult().getToken();
-
-                                    // Log and toast
-                                    // String msg = getString(R.string.msg_token_fmt, token);
-                                    Log.d("", token);
-                                    Toast.makeText(ChatActivity.this, token, Toast.LENGTH_SHORT).show();
                                 }
                             });
-                    myFirebaseService.onNewToken(token);
+                  //  myFirebaseMessaging.onNewToken(token);
 
-                    sendNotification(receiver, user.getUsername(), message);
+                    //sendNotification(receiver, user.getUsername(), message);
                 }
                 notify = false;
             }
@@ -281,7 +359,7 @@ public class ChatActivity extends AppCompatActivity {
     private void sendNotification(String receiver, final String username, final String message){
         DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
         Query query = tokens.orderByKey().equalTo(receiver);
-        Toast.makeText(ChatActivity.this, "notification 4",
+        Toast.makeText(ChatActivity.this, "receiver="  + receiver,
                 Toast.LENGTH_SHORT).show();
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -292,20 +370,21 @@ public class ChatActivity extends AppCompatActivity {
                             + ": " + message, "New Message", targetUserId);
 
                     NotificationSender sender = new NotificationSender(data, token.getToken());
-                    Toast.makeText(ChatActivity.this, "notification 3",
+                    Toast.makeText(ChatActivity.this, "token2 = " + token,
                             Toast.LENGTH_SHORT).show();
+
                     apiService.sendNotification(sender).enqueue(new Callback<MyRespond>() {
                         @Override
                         public void onResponse(Call<MyRespond> call, Response<MyRespond> response) {
                             if(response.code() == 200){
-                                Toast.makeText(ChatActivity.this, "notification 1",
-                                        Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(ChatActivity.this, "notification 1",
+//                                        Toast.LENGTH_SHORT).show();
                                 if(response.body().success != 1) {
-                                    Toast.makeText(ChatActivity.this, "notification 2",
-                                            Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(ChatActivity.this, "notification 2",
+//                                            Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(ChatActivity.this, "notification Failed",
-                                            Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ChatActivity.this, "notification " +
+                                                    "Failed", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
@@ -373,9 +452,15 @@ public class ChatActivity extends AppCompatActivity {
                                 mChat, imageURL);
                         recyclerView.setAdapter(messageAdapter);
 
+                        if(chat.getReceiver().equals(myId) && chat.getSender().equals(targetId)) {
+                            if(targetUserPBRef != null){
+                                targetUserPBRef.child("progress").setValue(String.valueOf(
+                                        targetUserPrograssBar.getProgress()));
+                            }
+
+                        }
                     }
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {}
             });
@@ -389,7 +474,8 @@ public class ChatActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Chat chat = snapshot.getValue(Chat.class);
-                    if(chat.getReceiver().equals(fUser.getUid()) && chat.getSender().equals(targetUserId)) {
+                    if(chat.getReceiver().equals(fUser.getUid()) && chat.getSender()
+                            .equals(targetUserId)) {
                         HashMap<String, Object> map = new HashMap<>();
                         map.put("isSeen", true);
                         snapshot.getRef().updateChildren(map);

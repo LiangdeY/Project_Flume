@@ -41,6 +41,13 @@
             android:text="setting" />
 
     </LinearLayout>
+    <ProgressBar
+        android:id="@+id/progressBar_chat"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username_linear_chat"
+        />
 
 
 
@@ -48,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recyclerView_chat"
-        android:layout_below="@+id/username_linear_chat"
+        android:layout_below="@+id/progressBar_chat"
         android:layout_above="@+id/input_layout_chat"
         >
 
@@ -81,6 +88,7 @@
         </ImageButton>
 
     </RelativeLayout>
+
 
 
 

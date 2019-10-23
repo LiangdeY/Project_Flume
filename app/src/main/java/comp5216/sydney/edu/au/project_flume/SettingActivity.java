@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -25,7 +26,6 @@ public class SettingActivity extends AppCompatActivity {
     private void InitUI() {
         Intent i = getIntent();
         final String fromActivity = i.getStringExtra("from");
-
         backBtn = findViewById(R.id.backBtn_setting);
         setProfileBtn = findViewById(R.id.profile_setting);
         setPrograssBtn = findViewById(R.id.set_progress_setting);
@@ -53,7 +53,7 @@ public class SettingActivity extends AppCompatActivity {
         setPrograssBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SettingActivity.this, ProfileActivity.class));
+                startActivity(new Intent(SettingActivity.this, SetProgressActivity.class));
             }
         });
         signOutBtn.setOnClickListener(new View.OnClickListener() {

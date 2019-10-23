@@ -3,6 +3,7 @@ package comp5216.sydney.edu.au.project_flume;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,7 +31,6 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_sign_up);
 
         auth = FirebaseAuth.getInstance();
@@ -76,6 +76,9 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void signUp(final String username, String email, String password) {
+        final ProgressDialog pDialog = new ProgressDialog(SignUpActivity.this);
+        pDialog.setMessage("Signing up..");
+        pDialog.show();
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -93,6 +96,8 @@ public class SignUpActivity extends AppCompatActivity {
                             hashMap.put("imageUri", "default");
                             hashMap.put("isMatch", "N");
                             hashMap.put("matchId", "N");
+                            hashMap.put("progressMax", String.valueOf(0));
+                            hashMap.put("upLocked", "N");
 
                             dbReference.setValue(hashMap).addOnCompleteListener(
                                     new OnCompleteListener<Void>() {
@@ -103,20 +108,23 @@ public class SignUpActivity extends AppCompatActivity {
                                                 HomeActivity.class) ;
                                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
                                                 Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        pDialog.dismiss();
                                         startActivity(i);
-                                        Log.w("", "createUserWithEmail:Success", task.getException());
+                                        Log.w("", "createUserWithEmail:Success",
+                                                task.getException());
                                         finish();
                                     }
                                     else{
-                                        Log.w("", "createHashmap:failure", task.getException());
+                                        Log.w("", "createHashmap:failure",
+                                                task.getException());
                                     }
                                 }
                             });
                         }else{
+                            pDialog.dismiss();
                             Toast.makeText(SignUpActivity.this, "Fail to sign up",
                                     Toast.LENGTH_SHORT).show();
                             Log.w("", "createUserWithEmail:failure", task.getException());
-
                         }
                     }
                 });

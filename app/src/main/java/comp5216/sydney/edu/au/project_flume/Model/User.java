@@ -7,15 +7,17 @@ public class User {
     private String imageUri;
     private String matchId;
     private String isMatch;
-    private String status;
+    private String progressMax;
+    private String unLocked;
 
 
-    public User (String id, String username, String imageURL, String status) {
+
+    public User (String id, String username, String imageURL, String progressMax, String unLocked) {
             this.id = id;
             this.username = username;
             this.imageUri = imageURL;
-            this.status = status;
-
+            this.progressMax = progressMax;
+            this.unLocked = unLocked;
     }
     public User () {}
 
@@ -34,7 +36,15 @@ public class User {
     public String getIsMatch() { return isMatch; }
     public void setIsMatch(String isMatch) { this.isMatch = isMatch; }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public String getProgressMax() { return progressMax; }
 
+    public String getUnLocked() {
+        return unLocked;
+    }
+
+    public void setUnLocked(String unLocked) {
+        this.unLocked = unLocked;
+    }
+
+    public void setProgressMax(String progressMax) { this.progressMax = progressMax; }
 }

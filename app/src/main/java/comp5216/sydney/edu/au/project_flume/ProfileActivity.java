@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,8 +51,8 @@ public class ProfileActivity extends AppCompatActivity {
     StorageReference storageRef;
 
     private static final int IMAGE_REQUEST = 100;
-     private Uri imageURI;
-     private StorageTask uploadTask;
+    private Uri imageURI;
+    private StorageTask uploadTask;
 
 
     @Override
@@ -73,6 +74,16 @@ public class ProfileActivity extends AppCompatActivity {
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         currentUserRef = FirebaseDatabase.getInstance().getReference("Users")
                 .child(fUser.getUid());
+
+        username.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(MainActivity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
 
         currentUserRef.addValueEventListener(new ValueEventListener() {
             @Override
