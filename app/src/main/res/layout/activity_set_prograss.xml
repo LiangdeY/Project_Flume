@@ -163,7 +163,7 @@
         android:textSize="@dimen/_13ssp"
         android:fontFamily="@font/sfuid_regular"
         android:alpha=".60"
-        android:text="Set the Photo to be Unlocked"/>
+        android:text="Set the Secret Photo!"/>
 
     <ImageView
         android:id="@+id/line4"
