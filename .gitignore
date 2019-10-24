@@ -11,3 +11,6 @@ app/app.iml
 *.bin
 *.lock
 *.ser
+*.bin
+*.lock
+*.ser

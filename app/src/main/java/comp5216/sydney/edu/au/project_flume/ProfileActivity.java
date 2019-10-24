@@ -9,6 +9,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
@@ -44,7 +45,7 @@ import comp5216.sydney.edu.au.project_flume.Model.User;
 
 public class ProfileActivity extends AppCompatActivity {
     ImageView avatar;
-    EditText username;
+    EditText username, confirmPassword, changePassword;
     Button applyBtn, cancelBtn;
 
     RadioButton radioSexButton;
@@ -67,12 +68,13 @@ public class ProfileActivity extends AppCompatActivity {
                 .child(fUser.getUid());
 
         avatar = findViewById(R.id.avatars_image);
-        //TODO set a button to allow user to choose gender
-        //TODO get the gender base on
         username = findViewById(R.id.username_profile);
         applyBtn = findViewById(R.id.applyBtn_profile);
         cancelBtn = findViewById(R.id.cancelBtn_profile);
         radioSexGroup =  findViewById(R.id.radioSex);
+        changePassword =  findViewById(R.id.change_password_profile);
+        confirmPassword =  findViewById(R.id.confirm_password_profile);
+        avatar.setImageResource(R.drawable.avatar_male);
 
         applyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,8 +92,18 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-
-       // profileImage.setImageResource(R.mipmap.ic_launcher);
+        radioSexGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                //change the avatar according to the button
+                radioSexButton = findViewById(checkedId);
+                if(radioSexButton.getText().toString().equals("Male")){
+                    avatar.setImageResource(R.drawable.avatar_male);
+                }else{
+                    avatar.setImageResource(R.drawable.avatar_female);
+                }
+            }
+        });
     }
     private void GetUserDataOnce(){
         currentUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -108,9 +120,36 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void SaveChanges(){
-        int selectedId = radioSexGroup.getCheckedRadioButtonId();
-        radioSexButton = findViewById(selectedId);
-        
+        currentUserRef.child("gender").setValue(radioSexButton.getText().toString());
+        currentUserRef.child("username").setValue(username.getText().toString());
+
+        if(ArePasswordsEqual()){
+            if( !changePassword.getText().toString().equals("")){
+                //both files are equal and not empty
+                fUser.updatePassword(changePassword.getText().toString())
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(ProfileActivity.this, "Update success!",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+            }
+        }else{
+            Toast.makeText(ProfileActivity.this, "Both password fields must b filled",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private boolean ArePasswordsEqual() {
+        if(changePassword.getText().toString().equals(confirmPassword.getText().toString())) {
+            return true;
+        }
+        return false;
     }
 
 }

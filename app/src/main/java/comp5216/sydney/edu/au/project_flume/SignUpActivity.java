@@ -135,6 +135,9 @@ public class SignUpActivity extends AppCompatActivity {
 
                             dbReference = FirebaseDatabase.getInstance().getReference("Users")
                                     .child(userId);
+                            int selectedId = radioSexGroup.getCheckedRadioButtonId();
+                            radioSexButton = findViewById(selectedId);
+
                             HashMap<String, String> hashMap = new HashMap<>();
                             hashMap.put("id", userId);
                             hashMap.put("username", username);
@@ -143,10 +146,6 @@ public class SignUpActivity extends AppCompatActivity {
                             hashMap.put("matchId", "N");
                             hashMap.put("progressMax", String.valueOf(0));
                             hashMap.put("unLocked", "N");
-
-                            int selectedId = radioSexGroup.getCheckedRadioButtonId();
-                            radioSexButton = findViewById(selectedId);
-
                             hashMap.put("gender", radioSexButton.getText().toString());
 
                             dbReference.setValue(hashMap).addOnCompleteListener(

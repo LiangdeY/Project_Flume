@@ -30,14 +30,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     private Context mContext;
     private List<Chat> mChat;
-    private String imageURL;
+    private String targetUserGender, userGender;
+
 
     FirebaseUser user;
 
-    public MessageAdapter(Context mContext, List<Chat> mChat, String imageURL) {
+    public MessageAdapter(Context mContext, List<Chat> mChat, String targetUserGender, String userGender) {
         this.mChat = mChat;
         this.mContext = mContext;
-        this.imageURL = imageURL;
+        this.userGender = userGender;
+        this.targetUserGender = targetUserGender;
+
     }
 
     @NonNull
@@ -47,11 +50,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         if(viewType == MESSAGE_TYPE_RIGHT){
             View v = LayoutInflater.from(mContext).inflate(R.layout.chat_item_right, viewGroup,
                     false);
-            return new MessageAdapter.ViewHolder(v);
+            return new MessageAdapter.ViewHolder(v, userGender);
         }else{
             View v = LayoutInflater.from(mContext).inflate(R.layout.chat__item_left, viewGroup,
                     false);
-            return new MessageAdapter.ViewHolder(v);
+            return new MessageAdapter.ViewHolder(v, targetUserGender);
         }
     }
 
@@ -60,13 +63,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         Chat chat  = mChat.get(position);
         holder.message.setText(chat.getMessage());
 
-
-        if(imageURL.equals("default")){
-            holder.user_image.setImageResource(R.mipmap.ic_launcher);
+        if(holder.gender.equals("Male")){
+            holder.user_image.setImageResource(R.drawable.avatar_male);
         }
         else{
-            //Glide.with(mContext).load(imageURL).into(holder.user_image);
+            holder.user_image.setImageResource(R.drawable.avatar_female);
         }
+
+
         if(chat.getIsSeen()){
             holder.msgSeen.setText("Seen");
         }else{
@@ -86,12 +90,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         public TextView message;
         public ImageView user_image;
         public TextView msgSeen;
+        public String gender;
 
-        public ViewHolder(View itemView) {
+
+        public ViewHolder(View itemView, String gender) {
             super(itemView);
             message = itemView.findViewById(R.id.show_message);
             user_image = itemView.findViewById(R.id.user_image_chatItem);
             msgSeen = itemView.findViewById(R.id.seen_chat_item);
+            this.gender = gender;
         }
     }
 
@@ -105,8 +112,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             return MESSAGE_TYPE_LEFT;
         }
     }
-
-
 
 
 }

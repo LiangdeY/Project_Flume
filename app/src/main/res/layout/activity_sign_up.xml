@@ -61,31 +61,47 @@
         android:id="@+id/radioSex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/usernameRectangle"
 
-        >
+        android:layout_below="@+id/logInHint"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_35sdp">
 
         <RadioButton
             android:id="@+id/radioMale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="male"
-            android:checked="true" />
+            android:text="Male"
+            android:checked="true"
+            android:textColor="#CCFFFFFF"
+            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/sfuid_regular"
+            android:alpha=".80"
+            android:buttonTint="#ffffff"/>
 
         <RadioButton
             android:id="@+id/radioFemale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="female" />
+
+            android:layout_marginStart="@dimen/_20ssp"
+            android:text="Female"
+            android:checked="false"
+            android:textColor="#CCFFFFFF"
+            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/sfuid_regular"
+            android:alpha=".80"
+            android:buttonTint="#F596BA"/>
+
     </RadioGroup>
 
     <ImageView
         android:id="@+id/usernameRectangle"
         android:layout_width="@dimen/_230sdp"
         android:layout_height="@dimen/_40sdp"
-        android:layout_below="@+id/logInHint"
+        android:layout_below="@+id/radioSex"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_35sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:alpha=".75"
         android:src="@drawable/edittext_bg" />
 
@@ -93,9 +109,9 @@
         android:id="@+id/user_name_sign_up"
         android:layout_width="@dimen/_210sdp"
         android:layout_height="@dimen/_30sdp"
-        android:layout_below="@+id/logInHint"
+        android:layout_below="@+id/radioSex"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_39sdp"
+        android:layout_marginTop="@dimen/_25sdp"
         android:hint="Nickname"
         android:textColorHint="#B2FFFFFF"
         android:textColor="#ffffff"

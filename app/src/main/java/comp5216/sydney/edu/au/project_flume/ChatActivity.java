@@ -67,7 +67,7 @@ public class ChatActivity extends AppCompatActivity {
     Boolean notify = false;
     APIService apiService;
     String targetUserId;
-    String token;
+    String token, userGender;
     User targetUserModel;
 
 
@@ -94,7 +94,10 @@ public class ChatActivity extends AppCompatActivity {
 
         apiService = Client.getRetrofit("https://fcm.googleapis.com/").create(APIService.class);
 
+        //GetUserGender();
         GetTargetUser();
+
+
         CheckMatching();
         SeenMessage();
         myFirebaseMessaging = new MyFirebaseMessaging();
@@ -106,6 +109,23 @@ public class ChatActivity extends AppCompatActivity {
                     .class);
             intent.putExtra("targetUserId" ,targetUserId);
             startActivity(intent);
+    }
+    private void GetUserGender(){
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Users")
+                .child(fUser.getUid());
+        dbRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                userGender = user.getGender();
+                ReadMessage(fUser.getUid(), targetUserId, targetUserModel.getGender(),
+                        userGender);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
@@ -121,7 +141,7 @@ public class ChatActivity extends AppCompatActivity {
         //set an empty adapter and update later.
         List<Chat> tempChat  = new ArrayList<>();
         MessageAdapter emptyAdapter = new MessageAdapter(ChatActivity.this, tempChat,
-                "default");
+                "Male", "Male");
         recyclerView.setAdapter(emptyAdapter);
 
         userName_view = findViewById(R.id.username_view_chat);
@@ -188,10 +208,13 @@ public class ChatActivity extends AppCompatActivity {
 
                     targetUserModel = dataSnapshot.getValue(User.class);
                     targetUserProgressBar.setMax(Integer.valueOf(targetUserModel.getProgressMax()));
+                    GetUserGender();
 
-                    userName_view.setText(targetUserModel.getUsername());
+                  //  }else{
+                        Toast.makeText(getApplicationContext(), "userGender= " + userGender,
+                                Toast.LENGTH_SHORT).show();
+                 //   }
 
-                    ReadMessage(fUser.getUid(), targetUserId, targetUserModel.getImageUri());
                 }
 
                 @Override
@@ -377,7 +400,8 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     //read message by sender and receiver
-    private void ReadMessage(final String myId,final String targetId,final String imageURL) {
+    private void ReadMessage(final String myId, final String targetId, final String targetGender,
+                             final String userGender) {
 
             mChat = new ArrayList<>();
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Chats");
@@ -395,8 +419,10 @@ public class ChatActivity extends AppCompatActivity {
                                 .equals(myId)) ){
                                 mChat.add(chat);
                         }
+                        Toast.makeText(getApplicationContext(), "1",
+                                Toast.LENGTH_SHORT).show();
                         messageAdapter = new MessageAdapter(ChatActivity.this,
-                                mChat, imageURL);
+                                mChat, targetGender, userGender);
                         recyclerView.setAdapter(messageAdapter);
 
                         if(chat.getReceiver().equals(myId) && chat.getSender().equals(targetId)) {
