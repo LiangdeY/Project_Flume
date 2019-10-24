@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         email = findViewById(R.id.email_login);
-        password = findViewById(R.id.email_sign_up);
+        password = findViewById(R.id.password_login);
         email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
