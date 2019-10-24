@@ -58,7 +58,7 @@
             android:src="@drawable/line" />
 
         <ImageView
-            android:id="@+id/userRectangle"
+            android:id="@+id/emailRectangle"
             android:layout_width="@dimen/_230sdp"
             android:layout_height="@dimen/_40sdp"
             android:layout_below="@+id/logInHint"
@@ -84,37 +84,58 @@
             />
 
         <ImageView
-            android:id="@+id/emailRectangle"
+            android:id="@+id/passwordRectangle"
             android:layout_width="@dimen/_230sdp"
             android:layout_height="@dimen/_40sdp"
-            android:layout_below="@+id/userRectangle"
+            android:layout_below="@+id/emailRectangle"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_15sdp"
             android:alpha=".75"
             android:src="@drawable/edittext_bg" />
 
-        <EditText
-            android:id="@+id/email_sign_up"
-            android:layout_width="@dimen/_210sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_below="@+id/userRectangle"
+        <LinearLayout
+            android:id="@+id/password_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/emailRectangle"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:hint="Password"
-            android:textColorHint="#B2FFFFFF"
-            android:textColor="#ffffff"
-            android:gravity="center"
-            android:fontFamily="@font/sfuid_thin"
-            android:singleLine="true"
-            android:background="@null"
-            android:inputType="textPassword"
-            />
+            android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/password_login"
+                    android:layout_width="@dimen/_210sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:hint="Password"
+                    android:textColorHint="#B2FFFFFF"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:fontFamily="@font/sfuid_thin"
+                    android:singleLine="true"
+                    android:background="@null"
+                    android:inputType="textPassword" />
+
+
+                <TextView
+                    android:id="@+id/forgetPassword_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginEnd="0dp"
+                    android:text="forget password"
+                    android:fontFamily="@font/sfuid_thin"
+                    android:textColor="#ffffff"/>
+
+        </LinearLayout>
+
 
         <Button
             android:id="@+id/login_main"
             android:layout_width="@dimen/_230sdp"
             android:layout_height="@dimen/_40sdp"
-            android:layout_below="@+id/emailRectangle"
+            android:layout_below="@+id/password_layout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_15sdp"
             android:text="Log in"
@@ -124,6 +145,7 @@
             android:alpha=".70"
             android:background="@drawable/login_rectangle"
             style="@style/Widget.AppCompat.Button.Borderless"/>
+
 
 
         <Button
@@ -141,15 +163,6 @@
             android:background="@drawable/footer"
             />
 
-        <TextView
-            android:id="@+id/forgetPassword_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="forget password"
-            android:layout_below="@id/login_main"
-            android:layout_alignParentEnd="true"
-
-            />
 
 
 </RelativeLayout>
