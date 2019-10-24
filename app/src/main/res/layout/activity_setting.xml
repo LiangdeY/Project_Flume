@@ -30,9 +30,9 @@
 
             <Button
                 android:id="@+id/backBtn_setting"
-                android:layout_width="27dp"
-                android:layout_height="27dp"
-                android:background="@drawable/ic_action_close"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/back_arrow"
                 style="@style/Widget.AppCompat.Button.Borderless" />
 
             <TextView

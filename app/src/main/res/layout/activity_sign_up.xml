@@ -58,7 +58,7 @@
         android:src="@drawable/line" />
 
     <ImageView
-        android:id="@+id/emailRectangle"
+        android:id="@+id/usernameRectangle"
         android:layout_width="@dimen/_230sdp"
         android:layout_height="@dimen/_40sdp"
         android:layout_below="@+id/logInHint"
@@ -84,20 +84,20 @@
         />
 
     <ImageView
-        android:id="@+id/passwordRectangle"
+        android:id="@+id/emailRectangle"
         android:layout_width="@dimen/_230sdp"
         android:layout_height="@dimen/_40sdp"
-        android:layout_below="@+id/emailRectangle"
+        android:layout_below="@+id/usernameRectangle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_15sdp"
         android:alpha=".75"
         android:src="@drawable/edittext_bg" />
 
     <EditText
-        android:id="@+id/password_login"
+        android:id="@+id/email_sign_up"
         android:layout_width="@dimen/_210sdp"
         android:layout_height="@dimen/_30sdp"
-        android:layout_below="@+id/emailRectangle"
+        android:layout_below="@+id/usernameRectangle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_20sdp"
         android:hint="Email address"
@@ -113,7 +113,7 @@
         android:id="@+id/passwordRectangle"
         android:layout_width="@dimen/_230sdp"
         android:layout_height="@dimen/_40sdp"
-        android:layout_below="@+id/passwordRectangle"
+        android:layout_below="@+id/emailRectangle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_15sdp"
         android:alpha=".75"
@@ -123,7 +123,7 @@
         android:id="@+id/password_sign_up"
         android:layout_width="@dimen/_210sdp"
         android:layout_height="@dimen/_30sdp"
-        android:layout_below="@+id/passwordRectangle"
+        android:layout_below="@+id/emailRectangle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_20sdp"
         android:hint="Password"

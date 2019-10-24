@@ -124,9 +124,9 @@
                     android:layout_gravity="end"
                     android:layout_marginTop="13dp"
                     android:layout_marginEnd="0dp"
-                    android:text="forget password"
+                    android:text="Forget password?"
                     android:fontFamily="@font/sfuid_thin"
-                    android:textColor="#ffffff"/>
+                    android:textColor="#B3FFFFFF"/>
 
         </LinearLayout>
 
@@ -137,7 +137,7 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_below="@+id/password_layout"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:text="Log in"
             android:textColor="#E6FFFFFF"
             android:textSize="@dimen/_14ssp"

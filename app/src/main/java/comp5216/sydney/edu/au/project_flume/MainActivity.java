@@ -33,8 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         email = findViewById(R.id.email_login);
-<<<<<<< HEAD
-        password = findViewById(R.id.email_sign_up);
+
         forgetPassword = findViewById(R.id.forgetPassword_main);
         forgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-=======
+
         password = findViewById(R.id.password_login);
->>>>>>> 4fd9b109a35ff1f13253ce772ed5df23454fa93b
+
         email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
