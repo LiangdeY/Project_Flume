@@ -186,7 +186,7 @@
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/imageframe"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@drawable/defaultphoto" />
 
     <Button
         android:id="@+id/applyBtn_progress"
