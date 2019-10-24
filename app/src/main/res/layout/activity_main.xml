@@ -140,6 +140,15 @@
             android:background="@drawable/footer"
             />
 
+        <TextView
+            android:id="@+id/forgetPassword_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="forget password"
+            android:layout_below="@id/login_main"
+            android:layout_alignParentEnd="true"
+
+            />
 
 
 </RelativeLayout>

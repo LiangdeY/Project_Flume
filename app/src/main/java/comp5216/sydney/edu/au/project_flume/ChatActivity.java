@@ -21,7 +21,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,7 +41,6 @@ import java.util.List;
 import comp5216.sydney.edu.au.project_flume.Adapter.MessageAdapter;
 import comp5216.sydney.edu.au.project_flume.Fragments.APIService;
 import comp5216.sydney.edu.au.project_flume.Model.Chat;
-import comp5216.sydney.edu.au.project_flume.Model.MyProgressBar;
 import comp5216.sydney.edu.au.project_flume.Model.User;
 import comp5216.sydney.edu.au.project_flume.Notification.Client;
 import comp5216.sydney.edu.au.project_flume.Notification.Data;
@@ -62,10 +60,10 @@ public class ChatActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     Button endChatBtn, settingBtn;
     FirebaseUser fUser;
-    DatabaseReference targetUserRef, chatRef, targetUserPBRef;
+    DatabaseReference targetUserRef, chatRef;
     Intent intent;
     MyFirebaseMessaging myFirebaseMessaging;
-    ProgressBar targetUserPrograssBar;
+    ProgressBar targetUserProgressBar;
     Boolean notify = false;
     APIService apiService;
     String targetUserId;
@@ -99,96 +97,19 @@ public class ChatActivity extends AppCompatActivity {
         CheckMatching();
         SeenMessage();
         myFirebaseMessaging = new MyFirebaseMessaging();
-        InitProgressBar();
         //load setting if there is.
-    }
-    private  void InitProgressBar() {
-        targetUserPrograssBar = findViewById(R.id.progressBar_chat);
-        DatabaseReference progressBarRef = FirebaseDatabase.getInstance()
-                .getReference("ProgressBar");
-        //create a progress bar if the database is empty
-
-        if(progressBarRef  == null) {
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("setter",targetUserId);
-            map.put("viewer", fUser.getUid());
-            map.put("max", targetUserModel.getProgressMax());
-            map.put("progress", "0");
-            ref.child("ProgressBar").push().setValue(map);
-
-            Toast.makeText(getApplicationContext(), "progressBarRef = null",
-                    Toast.LENGTH_SHORT).show();
-
-        }else{
-            Toast.makeText(getApplicationContext(), "progressBarRef not = null",
-                    Toast.LENGTH_SHORT).show();
-            progressBarRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    boolean isFould = false;
-                    MyProgressBar pBar;
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-
-                         pBar = snapshot.getValue(MyProgressBar.class);
-                         if(pBar != null) {
-                             if(pBar.getSetter().equals(targetUserId) && pBar.getViewer().equals(fUser.getUid())){
-
-                                 targetUserPBRef = snapshot.getRef();
-                                 Log.d("targetUserPBRef", targetUserPBRef.toString());
-
-                                 if(Integer.parseInt(pBar.getProgress()) <= Integer.parseInt(pBar.getMax())) {
-                                     targetUserPrograssBar.setMax(Integer.parseInt(pBar.getMax()));
-                                     targetUserPrograssBar.setProgress(Integer.parseInt(pBar.getProgress()));
-                                 }else{
-                                     targetUserRef.child("unLocked").setValue("Y");
-                                     AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
-                                     builder.setTitle("Congratulations!")
-                                             .setMessage("User profile unlocked")
-                                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                                 @Override
-                                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                                     Intent intent = new Intent(ChatActivity.this, ShowPhotoActivity.class);
-                                                     intent.putExtra("targetUserId", targetUserId);
-                                                     startActivity(intent);
-                                                 }
-                                             });
-                                     builder.create().show();
-                                 }
-                                 isFould = true;
-                             }
-                         }
-                    }
-                    if(!isFould){
-                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                        HashMap<String, Object> map = new HashMap<>();
-                        map.put("setter",targetUserId);
-                        map.put("viewer", fUser.getUid());
-                        map.put("max", targetUserModel.getProgressMax());
-                        map.put("progress", "0");
-                        ref.child("ProgressBar").push().setValue(map);
-
-                        Toast.makeText(getApplicationContext(), "progressbar created",
-                                Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {}
-            });
-
-        }
-
-
-
-
-
 
     }
+    public void onAvatarClick(View v) {
+            Intent intent = new Intent(ChatActivity.this, ShowPhotoActivity
+                    .class);
+            intent.putExtra("targetUserId" ,targetUserId);
+            startActivity(intent);
+    }
+
 
     private void InitUI() {
-
+        targetUserProgressBar = findViewById(R.id.progressBar_chat);
         //set up chat view
         LinearLayoutManager lManager = new LinearLayoutManager(getApplicationContext());
         lManager.setStackFromEnd(true);
@@ -263,6 +184,8 @@ public class ChatActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                     targetUserModel = dataSnapshot.getValue(User.class);
+                    targetUserProgressBar.setMax(Integer.valueOf(targetUserModel.getProgressMax()));
+
                     userName_view.setText(targetUserModel.getUsername());
 
                     ReadMessage(fUser.getUid(), targetUserId, targetUserModel.getImageUri());
@@ -314,6 +237,7 @@ public class ChatActivity extends AppCompatActivity {
             currentUserRef.child("isMatch").setValue("N");
             currentUserRef.child("matchId").setValue("N");
 
+            unMatchBool = true;
             //TODO handle matches fail, consider transaction
             startActivity(new Intent(ChatActivity.this, HomeActivity.class));
 
@@ -457,25 +381,41 @@ public class ChatActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     mChat.clear();
+                    int i = 0;
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                         Chat chat = snapshot.getValue(Chat.class);
 
                         if((chat.getReceiver().equals(myId) && chat.getSender().equals(targetId))
                                 || (chat.getReceiver().equals(targetId) && chat.getSender()
                                 .equals(myId)) ){
-                            mChat.add(chat);
+                                mChat.add(chat);
                         }
                         messageAdapter = new MessageAdapter(ChatActivity.this,
                                 mChat, imageURL);
                         recyclerView.setAdapter(messageAdapter);
 
                         if(chat.getReceiver().equals(myId) && chat.getSender().equals(targetId)) {
-                            if(targetUserPBRef != null){
-                                targetUserPBRef.child("progress").setValue(String.valueOf(
-                                        targetUserPrograssBar.getProgress()));
-                            }
-
+                            i++;
                         }
+                    }
+                    targetUserProgressBar.setProgress(i);
+                    if(targetUserProgressBar.getProgress() > targetUserProgressBar.getMax()
+                            && targetUserModel.getUnLocked().equals("N")){
+
+                        targetUserRef.child("unLocked").setValue("Y");
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                        builder.setTitle("Congratulation!")
+                                .setMessage("User photo unlocked")
+                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        Intent intent = new Intent(ChatActivity.this,
+                                                ShowPhotoActivity.class);
+                                        intent.putExtra("targetUserId" ,targetUserId);
+                                        startActivity(intent);
+                                    }
+                                });
+                        builder.create().show();
                     }
                 }
                 @Override

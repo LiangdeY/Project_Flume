@@ -12,6 +12,7 @@
         android:layout_height="40dp"
         android:src="@mipmap/ic_launcher"
         android:id="@+id/user_image_chatItem"
+        android:onClick="onAvatarClick"
         ></ImageView>
 
     <TextView

@@ -34,14 +34,14 @@ public class SettingActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(fromActivity.equals("Home")) {
+//                if(fromActivity.equals("Home")) {
                     startActivity(new Intent(SettingActivity.this,
                             HomeActivity.class));
-                }
-                if(fromActivity.equals("Chat")) {
-                    startActivity(new Intent(SettingActivity.this,
-                            ChatActivity.class));
-                }
+//                }
+//                if(fromActivity.equals("Chat")) {
+//                    startActivity(new Intent(SettingActivity.this,
+//                            ChatActivity.class));
+//                }
             }
         });
         setProfileBtn.setOnClickListener(new View.OnClickListener() {
