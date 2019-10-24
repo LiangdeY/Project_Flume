@@ -61,9 +61,8 @@
         android:layout_below="@+id/showHint"
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxHeight="280dp"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
         android:background="@drawable/imageframe"
         tools:src="@tools:sample/avatars" />
 

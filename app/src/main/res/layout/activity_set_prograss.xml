@@ -179,14 +179,13 @@
 
     <ImageView
         android:id="@+id/profile_image_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxHeight="280dp"
+        android:layout_width="210dp"
+        android:layout_height="280dp"
         android:layout_below="@+id/photoHint"
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/imageframe"
-        tools:srcCompat="@drawable/defaultphoto" />
+        tools:srcCompat="@drawable/avatar_female" />
 
     <Button
         android:id="@+id/applyBtn_progress"
