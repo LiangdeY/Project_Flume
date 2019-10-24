@@ -10,47 +10,30 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import comp5216.sydney.edu.au.project_flume.Adapter.MessageAdapter;
-import comp5216.sydney.edu.au.project_flume.Fragments.APIService;
 import comp5216.sydney.edu.au.project_flume.Model.Chat;
 import comp5216.sydney.edu.au.project_flume.Model.User;
-import comp5216.sydney.edu.au.project_flume.Notification.Client;
-import comp5216.sydney.edu.au.project_flume.Notification.Data;
-import comp5216.sydney.edu.au.project_flume.Notification.MyFirebaseMessaging;
-import comp5216.sydney.edu.au.project_flume.Notification.MyRespond;
-import comp5216.sydney.edu.au.project_flume.Notification.NotificationSender;
-import comp5216.sydney.edu.au.project_flume.Notification.Token;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -62,15 +45,12 @@ public class ChatActivity extends AppCompatActivity {
     FirebaseUser fUser;
     DatabaseReference targetUserRef, chatRef;
     Intent intent;
-    MyFirebaseMessaging myFirebaseMessaging;
     ProgressBar targetUserProgressBar;
     Boolean notify = false;
-    APIService apiService;
     String targetUserId;
-    String token, userGender;
+    String userGender;
     User targetUserModel;
     boolean endByUser = false;
-
 
     MessageAdapter messageAdapter;
     List<Chat> mChat;
@@ -94,22 +74,18 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        //GetUserGender();
         GetTargetUser();
-
-
         CheckMatching();
         SeenMessage();
-        myFirebaseMessaging = new MyFirebaseMessaging();
-        //load setting if there is.
-
     }
+
     public void onAvatarClick(View v) {
             Intent intent = new Intent(ChatActivity.this, ShowPhotoActivity
                     .class);
             intent.putExtra("targetUserId" ,targetUserId);
             startActivity(intent);
     }
+
     private void GetUserGender(){
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("Users")
                 .child(fUser.getUid());
@@ -127,7 +103,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void InitUI() {
         targetUserProgressBar = findViewById(R.id.progressBar_chat);
@@ -223,6 +198,7 @@ public class ChatActivity extends AppCompatActivity {
             Toast.makeText(ChatActivity.this, "Sorry, Something goes wrong",
                     Toast.LENGTH_SHORT).show();
             startActivity(new Intent(ChatActivity.this, MainActivity.class));
+
         }
     }
 
@@ -242,10 +218,12 @@ public class ChatActivity extends AppCompatActivity {
                         // Nothing happens
                     }});
         builder.create().show();
+
     }
 
     //UnMatch
     private void UnMatch() {
+
         try {
             //unMatch the target user
             endByUser = true;
@@ -275,6 +253,7 @@ public class ChatActivity extends AppCompatActivity {
 
     //send message
     private void SendMessage(String sender, final String receiver, final String message) {
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         HashMap<String, Object> map = new HashMap<>();
 
@@ -284,10 +263,10 @@ public class ChatActivity extends AppCompatActivity {
         map.put("isSeen", false);
 
         ref.child("Chats").push().setValue(map);
-
     }
 
     private void CheckMatching(){
+
         DatabaseReference ref =  FirebaseDatabase.getInstance().getReference("Users")
                 .child(fUser.getUid());
         ref.addValueEventListener(new ValueEventListener() {
@@ -327,6 +306,7 @@ public class ChatActivity extends AppCompatActivity {
 
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                     mChat.clear();
                     int i = 0;
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()){
@@ -346,6 +326,8 @@ public class ChatActivity extends AppCompatActivity {
                             i++;
                         }
                     }
+
+                    //set the progress bar according to chats received
                     targetUserProgressBar.setProgress(i);
                     if(targetUserProgressBar.getProgress() >= targetUserProgressBar.getMax()
                             && targetUserModel.getUnLocked().equals("N")){
@@ -372,6 +354,7 @@ public class ChatActivity extends AppCompatActivity {
             });
     }
 
+    //seen message functions
     private void SeenMessage() {
         chatRef = FirebaseDatabase.getInstance().getReference("Chats");
         seenListener = chatRef.addValueEventListener(new ValueEventListener() {

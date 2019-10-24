@@ -4,17 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -55,12 +52,15 @@ public class HomeActivity extends AppCompatActivity {
         CheckMatch();
     }
 
-
     private void InitUI(){
         //get user info
         username = findViewById(R.id.username_home);
         matchBtn = findViewById(R.id.matchBtn_home);
         settingBtn = findViewById(R.id.settingBtn_home);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        dbReference = FirebaseDatabase.getInstance().getReference("Users")
+                .child(user.getUid());
 
         matchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,27 +82,23 @@ public class HomeActivity extends AppCompatActivity {
                 }
         });
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        dbReference = FirebaseDatabase.getInstance().getReference("Users")
-                .child(user.getUid());
-
         dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                //
                 currentUserModel = dataSnapshot.getValue(User.class);
                 username.setText(currentUserModel.getUsername());
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
-
     }
 
-
     private void MatchUser() {
+
+        Random random = new Random();
+
         //create a list of unmatched user
         List<User> unMatchUser = new ArrayList<>();
         for(int i=0;i<mUsers.size();i++){
@@ -111,7 +107,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
         // pick a random user;
-        Random random = new Random();
 
         try {
             int index = random.nextInt(unMatchUser.size());
@@ -138,12 +133,11 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
 
         }catch (Exception e) {
-            Log.d("matchUser Exception", e.toString());
 
+            Log.d("matchUser Exception", e.toString());
             matchBtn.setText("Match");
             Toast.makeText(HomeActivity.this, "Sorry, We can't find a match",
                     Toast.LENGTH_SHORT).show();
-
         }
     }
 
@@ -152,8 +146,8 @@ public class HomeActivity extends AppCompatActivity {
         mUsers  = new ArrayList<>();
         //get a list of user from database, except the current user
         mFirebaseUser  = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference userListRef = FirebaseDatabase.getInstance().getReference("Users");
 
+        DatabaseReference userListRef = FirebaseDatabase.getInstance().getReference("Users");
         userListRef.addValueEventListener( new ValueEventListener() {
             @Override
             public void onDataChange( @NonNull DataSnapshot dataSnapshot ) {
@@ -168,10 +162,7 @@ public class HomeActivity extends AppCompatActivity {
                         mUsers.add(user);
                     }
                 }
-//                //pring name for debug
-//                for(int i=0;i<mUsers.size();i++){
-//                    Log.d("list of name", mUsers.get(i).getUsername());
-//                }
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -196,6 +187,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-        //forward the user to the chat screen if he has a matches
+
     }
 }
