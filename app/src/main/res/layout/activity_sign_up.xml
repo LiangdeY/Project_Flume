@@ -109,8 +109,6 @@
         android:background="@null"
         />
 
-<<<<<<< HEAD
-=======
     <ImageView
         android:id="@+id/passwordRectangle"
         android:layout_width="@dimen/_230sdp"
@@ -137,8 +135,6 @@
         android:background="@null"
         android:inputType="textPassword"
         />
->>>>>>> f7a998030b9315d97e5fd68d17c08482af776484
-
 
     <Button
         android:id="@+id/sign_up_button"
