@@ -130,7 +130,7 @@ public class SignUpActivity extends AppCompatActivity {
                             hashMap.put("isMatch", "N");
                             hashMap.put("matchId", "N");
                             hashMap.put("progressMax", String.valueOf(0));
-                            hashMap.put("upLocked", "N");
+                            hashMap.put("unLocked", "N");
 
                             dbReference.setValue(hashMap).addOnCompleteListener(
                                     new OnCompleteListener<Void>() {

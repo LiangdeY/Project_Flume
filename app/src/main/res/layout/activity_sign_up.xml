@@ -136,7 +136,6 @@
         android:inputType="textPassword"
         />
 
-
     <Button
         android:id="@+id/sign_up_button"
         android:layout_width="@dimen/_230sdp"

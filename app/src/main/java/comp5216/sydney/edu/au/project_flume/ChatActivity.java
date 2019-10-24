@@ -400,7 +400,7 @@ public class ChatActivity extends AppCompatActivity {
                         }
                     }
                     targetUserProgressBar.setProgress(i);
-                    if(targetUserProgressBar.getProgress() > targetUserProgressBar.getMax()
+                    if(targetUserProgressBar.getProgress() >= targetUserProgressBar.getMax()
                             && targetUserModel.getUnLocked().equals("N")){
 
                         targetUserRef.child("unLocked").setValue("Y");
