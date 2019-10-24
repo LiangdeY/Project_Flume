@@ -10,6 +10,8 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import comp5216.sydney.edu.au.project_flume.Model.Chat;
+
 public class SettingActivity extends AppCompatActivity {
 
 
@@ -24,7 +26,6 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void InitUI() {
-        //Intent i = getIntent();
         backBtn = findViewById(R.id.backBtn_setting);
         setProfileBtn = findViewById(R.id.profile_setting);
         setProgressBtn = findViewById(R.id.set_progress_setting);
@@ -33,25 +34,24 @@ public class SettingActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    startActivity(new Intent(SettingActivity.this,
-                            HomeActivity.class));
-
+                onBackPressed();
             }
         });
+
         setProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SettingActivity.this, ProfileActivity.class));
+                startActivity(new Intent( SettingActivity.this, ProfileActivity.class));
             }
         });
+
         setProgressBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(SettingActivity.this, SetProgressActivity.class) ;
-                i.putExtra("from", "setting");
-                startActivity(i);
+                startActivity(new Intent(SettingActivity.this, SetProgressActivity.class));
             }
         });
+
         signOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,8 +59,6 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity( new Intent(SettingActivity.this, MainActivity.class));
             }
         });
-
-
 
     }
 

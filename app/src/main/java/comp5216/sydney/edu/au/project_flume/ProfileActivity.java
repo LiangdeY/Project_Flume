@@ -50,7 +50,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     RadioButton radioSexButton;
     RadioGroup radioSexGroup;
-
     FirebaseUser fUser;
     DatabaseReference currentUserRef;
     @Override
@@ -63,6 +62,8 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void InitUI() {
+
+
         fUser = FirebaseAuth.getInstance().getCurrentUser();
         currentUserRef = FirebaseDatabase.getInstance().getReference("Users")
                 .child(fUser.getUid());
@@ -80,18 +81,17 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SaveChanges();
-                startActivity( new Intent( ProfileActivity.this, SettingActivity
-                        .class));
+                onBackPressed();
             }
         });
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity( new Intent( ProfileActivity.this, SettingActivity
-                        .class));
+                onBackPressed();
             }
         });
 
+        radioSexButton = findViewById(radioSexGroup.getCheckedRadioButtonId());
         radioSexGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

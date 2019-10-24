@@ -77,9 +77,9 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, SettingActivity.class);
-                i.putExtra("from", "Home");
+                i.putExtra("from", "home");
                 startActivity(i);
-            }
+                }
         });
 
         user = FirebaseAuth.getInstance().getCurrentUser();

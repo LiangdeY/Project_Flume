@@ -74,6 +74,7 @@ public class ChatActivity extends AppCompatActivity {
     MessageAdapter messageAdapter;
     List<Chat> mChat;
     ValueEventListener seenListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,9 +177,10 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(ChatActivity.this, SettingActivity.class);
-                i.putExtra("from", "Chat");
+                i.putExtra("from", "chat");
+                i.putExtra("targetUserId_chat", targetUserId);
                 startActivity(i);
-            }
+                }
         });
 
         inputEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -209,12 +211,6 @@ public class ChatActivity extends AppCompatActivity {
                     targetUserModel = dataSnapshot.getValue(User.class);
                     targetUserProgressBar.setMax(Integer.valueOf(targetUserModel.getProgressMax()));
                     GetUserGender();
-
-                  //  }else{
-                        Toast.makeText(getApplicationContext(), "userGender= " + userGender,
-                                Toast.LENGTH_SHORT).show();
-                 //   }
-
                 }
 
                 @Override
@@ -345,8 +341,7 @@ public class ChatActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<MyRespond> call, Response<MyRespond> response) {
                             if(response.code() == 200){
-//                                Toast.makeText(ChatActivity.this, "notification 1",
-//                                        Toast.LENGTH_SHORT).show();
+//
                                 if(response.body().success != 1) {
 //                                    Toast.makeText(ChatActivity.this, "notification 2",
 //                                            Toast.LENGTH_SHORT).show();
@@ -419,8 +414,7 @@ public class ChatActivity extends AppCompatActivity {
                                 .equals(myId)) ){
                                 mChat.add(chat);
                         }
-                        Toast.makeText(getApplicationContext(), "1",
-                                Toast.LENGTH_SHORT).show();
+
                         messageAdapter = new MessageAdapter(ChatActivity.this,
                                 mChat, targetGender, userGender);
                         recyclerView.setAdapter(messageAdapter);

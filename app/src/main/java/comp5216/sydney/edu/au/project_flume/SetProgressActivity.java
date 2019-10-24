@@ -16,6 +16,8 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -41,12 +43,12 @@ import comp5216.sydney.edu.au.project_flume.Model.User;
 
 public class SetProgressActivity extends AppCompatActivity {
     Button applyBtn;
-    EditText progress_max;
     DatabaseReference currentUserRef;
     ImageView profileImage;
     StorageReference storageRef;
     String fromActivity;
-
+    RadioButton radioButton;
+    RadioGroup radioGroup;
     private static final int IMAGE_REQUEST = 100;
     private Uri imageURI;
     private StorageTask uploadTask;
@@ -56,47 +58,42 @@ public class SetProgressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_prograss);
 
-        Intent intent = getIntent();
-        fromActivity = intent.getStringExtra("from");
-        InitUI();
+        Intent i = getIntent();
+        fromActivity = i.getStringExtra("from");
 
+        InitUI();
         storageRef = FirebaseStorage.getInstance().getReference("uploads");
     }
     private void InitUI(){
-        progress_max = findViewById(R.id.progress_max_progress);
         profileImage = findViewById(R.id.profile_image_progress);
-
+        radioGroup = findViewById(R.id.radio_difficulty);
         FirebaseUser mFirebaseUser  = FirebaseAuth.getInstance().getCurrentUser();
         currentUserRef = FirebaseDatabase.getInstance().getReference("Users")
                 .child(mFirebaseUser.getUid());
-
-        currentUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User currentUserModel = dataSnapshot.getValue(User.class);
-                progress_max.setText(currentUserModel.getProgressMax());
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
 
         applyBtn = findViewById(R.id.applyBtn_progress);
         applyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int selectedId = radioGroup.getCheckedRadioButtonId();
+                radioButton = findViewById(selectedId);
 
-                currentUserRef.child("progressMax").setValue(progress_max.getText().toString());
+                switch (radioButton.getText().toString()){
 
-                if(fromActivity.equals("signUp")){
-                    startActivity(new Intent( SetProgressActivity.this,
-                            HomeActivity.class));
+                    case "Easy": currentUserRef.child("progressMax").setValue(String.valueOf(20));
+                        break;
+                    case "Medium": currentUserRef.child("progressMax").setValue(String.valueOf(50));
+                        break;
+                    case "Hard": currentUserRef.child("progressMax").setValue(String.valueOf(100));
+                        break;
+                        default:
                 }
 
-                if(fromActivity.equals("setting")){
-                    startActivity(new Intent( SetProgressActivity.this,
-                            SettingActivity.class));
+                if(fromActivity!= null) {
+                    startActivity( new Intent(SetProgressActivity.this, HomeActivity.class));
+                }else{
+                    onBackPressed();
                 }
-
             }
         });
         currentUserRef.addValueEventListener(new ValueEventListener() {
@@ -166,6 +163,8 @@ public class SetProgressActivity extends AppCompatActivity {
                         HashMap<String, Object> map = new HashMap<>();
                         map.put("imageUri", mUri);
                         currentUserRef.updateChildren(map);
+                        Toast.makeText(SetProgressActivity.this, "Upload success!",
+                                Toast.LENGTH_SHORT).show();
                         pDialog.dismiss();
 
                     }else{
