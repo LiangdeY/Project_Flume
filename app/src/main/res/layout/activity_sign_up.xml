@@ -109,32 +109,6 @@
         android:background="@null"
         />
 
-    <ImageView
-        android:id="@+id/passwordRectangle"
-        android:layout_width="@dimen/_230sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_below="@+id/passwordRectangle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_15sdp"
-        android:alpha=".75"
-        android:src="@drawable/edittext_bg" />
-
-    <EditText
-        android:id="@+id/password_sign_up"
-        android:layout_width="@dimen/_210sdp"
-        android:layout_height="@dimen/_30sdp"
-        android:layout_below="@+id/passwordRectangle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:hint="Password"
-        android:textColorHint="#B2FFFFFF"
-        android:textColor="#ffffff"
-        android:gravity="center"
-        android:fontFamily="@font/sfuid_thin"
-        android:singleLine="true"
-        android:background="@null"
-        android:inputType="textPassword"
-        />
 
 
     <Button

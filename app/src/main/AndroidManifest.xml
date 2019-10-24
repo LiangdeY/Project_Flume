@@ -19,7 +19,6 @@
         <activity android:name=".SetProgressActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".TargetUserProfileActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".ChatActivity" />
         <activity

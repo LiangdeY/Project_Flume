@@ -16,31 +16,26 @@
 
 
     <ImageView
-        android:id="@+id/profile_image_profile"
+        android:id="@+id/avatars_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="100dp"
-        android:src="@mipmap/ic_launcher"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <ImageView
-        android:id="@+id/profile_image_profile2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="114dp"
-        android:layout_marginEnd="153dp"
-        android:layout_marginBottom="509dp"
-        android:src="@mipmap/ic_launcher"
-        tools:srcCompat="@tools:sample/avatars" />
+    <Switch
+        android:id="@+id/switchBtn_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/avatars_image"
+
+        android:text="Switch" />
+
 
     <LinearLayout
         android:layout_marginTop="100dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/profile_image_profile"
+        android:layout_below="@+id/switchBtn_profile"
         android:id="@+id/username_linear_profile"
         >
         <TextView
@@ -124,23 +119,7 @@
         android:layout_alignParentEnd="true"
         android:text="Apply" />
 
-    <Button
-        android:id="@+id/choose1Btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/profile_image_profile"
-        android:layout_marginTop="32dp"
-        android:text="chooes1" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="173dp"
-        android:layout_marginBottom="445dp"
-        android:text="choose2" />
 
 
 </RelativeLayout>
