@@ -61,7 +61,7 @@ public class ProfileActivity extends AppCompatActivity {
                 .child(fUser.getUid());
 
 
-        profileImage.setImageResource(R.mipmap.ic_launcher);
+       // profileImage.setImageResource(R.mipmap.ic_launcher);
 
 
 

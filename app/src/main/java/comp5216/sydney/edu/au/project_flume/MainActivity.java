@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         password = findViewById(R.id.password_login);
-        
+
         email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
