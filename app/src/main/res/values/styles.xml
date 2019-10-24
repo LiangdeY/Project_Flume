@@ -5,7 +5,7 @@
     <!-- Customize your theme here. -->
     <item name="colorPrimary">@color/fui_transparent</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorAccent">#F3BCD1</item>
     <item name="windowActionBarOverlay">true</item>
     <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     <item name="android:statusBarColor">@android:color/transparent</item>
