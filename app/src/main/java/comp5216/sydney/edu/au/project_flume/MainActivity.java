@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
                                 pDialog.dismiss();
                                 Intent i = new Intent(MainActivity.this,
                                         HomeActivity.class);
-                                i.putExtra("login", "1");
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
                                         Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(i);

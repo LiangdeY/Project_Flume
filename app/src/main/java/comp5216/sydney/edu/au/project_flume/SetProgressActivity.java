@@ -40,11 +40,12 @@ import java.util.HashMap;
 import comp5216.sydney.edu.au.project_flume.Model.User;
 
 public class SetProgressActivity extends AppCompatActivity {
-    Button backBtn;
+    Button applyBtn;
     EditText progress_max;
     DatabaseReference currentUserRef;
     ImageView profileImage;
     StorageReference storageRef;
+    String fromActivity;
 
     private static final int IMAGE_REQUEST = 100;
     private Uri imageURI;
@@ -54,11 +55,12 @@ public class SetProgressActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_prograss);
+
+        Intent intent = getIntent();
+        fromActivity = intent.getStringExtra("from");
         InitUI();
 
-
         storageRef = FirebaseStorage.getInstance().getReference("uploads");
-
     }
     private void InitUI(){
         progress_max = findViewById(R.id.progress_max_progress);
@@ -78,13 +80,23 @@ public class SetProgressActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
 
-        backBtn = findViewById(R.id.backBtn_progress);
-        backBtn.setOnClickListener(new View.OnClickListener() {
+        applyBtn = findViewById(R.id.applyBtn_progress);
+        applyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 currentUserRef.child("progressMax").setValue(progress_max.getText().toString());
-                startActivity(new Intent( SetProgressActivity.this,
-                        SettingActivity.class));
+
+                if(fromActivity.equals("signUp")){
+                    startActivity(new Intent( SetProgressActivity.this,
+                            HomeActivity.class));
+                }
+
+                if(fromActivity.equals("setting")){
+                    startActivity(new Intent( SetProgressActivity.this,
+                            SettingActivity.class));
+                }
+
             }
         });
         currentUserRef.addValueEventListener(new ValueEventListener() {

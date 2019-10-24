@@ -22,20 +22,32 @@
         android:layout_marginTop="100dp"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <Switch
-        android:id="@+id/switchBtn_profile"
+    <RadioGroup
+        android:id="@+id/radioSex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/avatars_image"
+        android:layout_alignParentEnd="true">
 
-        android:text="Switch" />
+        <RadioButton
+            android:id="@+id/radioMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="male"
+            android:checked="true" />
 
+        <RadioButton
+            android:id="@+id/radioFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="female" />
+
+    </RadioGroup>
 
     <LinearLayout
         android:layout_marginTop="100dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/switchBtn_profile"
+        android:layout_below="@+id/avatars_image"
         android:id="@+id/username_linear_profile"
         >
         <TextView
@@ -61,6 +73,7 @@
         android:layout_below="@+id/username_linear_profile"
         android:id="@+id/change_password_linear"
         >
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -118,8 +131,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:text="Apply" />
-
-
 
 
 </RelativeLayout>

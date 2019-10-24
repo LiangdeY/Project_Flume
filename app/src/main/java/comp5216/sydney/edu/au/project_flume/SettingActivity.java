@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class SettingActivity extends AppCompatActivity {
 
 
-    Button backBtn, setProfileBtn, setPrograssBtn, signOutBtn;
+    Button backBtn, setProfileBtn, setProgressBtn, signOutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,24 +24,18 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void InitUI() {
-        Intent i = getIntent();
-        final String fromActivity = i.getStringExtra("from");
+        //Intent i = getIntent();
         backBtn = findViewById(R.id.backBtn_setting);
         setProfileBtn = findViewById(R.id.profile_setting);
-        setPrograssBtn = findViewById(R.id.set_progress_setting);
+        setProgressBtn = findViewById(R.id.set_progress_setting);
         signOutBtn = findViewById(R.id.sign_out_setting);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if(fromActivity.equals("Home")) {
                     startActivity(new Intent(SettingActivity.this,
                             HomeActivity.class));
-//                }
-//                if(fromActivity.equals("Chat")) {
-//                    startActivity(new Intent(SettingActivity.this,
-//                            ChatActivity.class));
-//                }
+
             }
         });
         setProfileBtn.setOnClickListener(new View.OnClickListener() {
@@ -50,10 +44,12 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(new Intent(SettingActivity.this, ProfileActivity.class));
             }
         });
-        setPrograssBtn.setOnClickListener(new View.OnClickListener() {
+        setProgressBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SettingActivity.this, SetProgressActivity.class));
+                Intent i = new Intent(SettingActivity.this, SetProgressActivity.class) ;
+                i.putExtra("from", "setting");
+                startActivity(i);
             }
         });
         signOutBtn.setOnClickListener(new View.OnClickListener() {

@@ -9,15 +9,19 @@ public class User {
     private String isMatch;
     private String progressMax;
     private String unLocked;
+    private String gender;
 
 
 
-    public User (String id, String username, String imageURL, String progressMax, String unLocked) {
+
+    public User (String id, String username, String imageURL, String progressMax, String unLocked,
+                 String gender) {
             this.id = id;
             this.username = username;
             this.imageUri = imageURL;
             this.progressMax = progressMax;
             this.unLocked = unLocked;
+            this.gender = gender;
     }
     public User () {}
 
@@ -45,6 +49,10 @@ public class User {
     public void setUnLocked(String unLocked) {
         this.unLocked = unLocked;
     }
+
+    public String getGender() { return gender; }
+
+    public void setGender(String gender) { this.gender = gender; }
 
     public void setProgressMax(String progressMax) { this.progressMax = progressMax; }
 }

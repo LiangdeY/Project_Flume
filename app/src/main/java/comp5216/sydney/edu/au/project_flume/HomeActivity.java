@@ -45,13 +45,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //TODO otherwise load the page
-
-        Intent intent = getIntent();
-        String login = intent.getStringExtra("login");
-        if(login == "1") {
-
-        }
         InitUI();
         GetUserList();
     }

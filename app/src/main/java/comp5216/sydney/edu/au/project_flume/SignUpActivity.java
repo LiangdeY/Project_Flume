@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,7 +27,10 @@ import java.util.HashMap;
 
 
 public class SignUpActivity extends AppCompatActivity {
-    Button goBackBtn;
+    Button goBackBtn, signUpBtn;
+    RadioButton radioSexButton;
+    RadioGroup radioSexGroup;
+
     FirebaseAuth auth;
     DatabaseReference dbReference;
 
@@ -34,35 +39,29 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        auth = FirebaseAuth.getInstance();
-
         initUI();
-
-        goBackBtn = findViewById(R.id.goBackBtn);
-        goBackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity( new Intent(SignUpActivity.this, MainActivity.class) );
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            }
-        });
-
     }
 
     private void initUI() {
         final EditText username, email, password;
-        Button signUpBtn;
+        auth = FirebaseAuth.getInstance();
 
         username = findViewById(R.id.user_name_sign_up);
         email = findViewById(R.id.email_sign_up);
         password = findViewById(R.id.password_sign_up);
+
         signUpBtn= findViewById(R.id.sign_up_button);
+        goBackBtn = findViewById(R.id.goBackBtn);
+        radioSexGroup =  findViewById(R.id.radioSex);
+
+
         signUpBtn.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 String sUsername = username.getText().toString();
                 String sEmail= email.getText().toString();
                 String sPassword = password.getText().toString();
+
                 if(sUsername.isEmpty() || sEmail.isEmpty() || sPassword.isEmpty()){
                     Toast.makeText(SignUpActivity.this, "all fields must be filled",
                             Toast.LENGTH_SHORT).show();
@@ -77,11 +76,22 @@ public class SignUpActivity extends AppCompatActivity {
             }
         } );
 
+        goBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity( new Intent(SignUpActivity.this, MainActivity.class) );
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
+
+
         email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(MainActivity.INPUT_METHOD_SERVICE);
+                    InputMethodManager inputMethodManager =(InputMethodManager) getSystemService(
+                            MainActivity.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
             }
@@ -91,7 +101,8 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(MainActivity.INPUT_METHOD_SERVICE);
+                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(
+                            MainActivity.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
             }
@@ -101,7 +112,8 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(MainActivity.INPUT_METHOD_SERVICE);
+                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(
+                            MainActivity.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
             }
@@ -132,20 +144,28 @@ public class SignUpActivity extends AppCompatActivity {
                             hashMap.put("progressMax", String.valueOf(0));
                             hashMap.put("unLocked", "N");
 
+                            int selectedId = radioSexGroup.getCheckedRadioButtonId();
+                            radioSexButton = findViewById(selectedId);
+
+                            hashMap.put("gender", radioSexButton.getText().toString());
+
                             dbReference.setValue(hashMap).addOnCompleteListener(
                                     new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()) {
                                         Intent i = new Intent(SignUpActivity.this,
-                                                HomeActivity.class) ;
+                                                SetProgressActivity.class) ;
                                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
                                                 Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        i.putExtra("from", "signUp");
                                         pDialog.dismiss();
                                         startActivity(i);
 
-                                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                                        Log.w("", "createUserWithEmail:Success", task.getException());
+                                        overridePendingTransition(android.R.anim.fade_in,
+                                                android.R.anim.fade_out);
+                                        Log.w("", "createUserWithEmail:Success",
+                                                task.getException());
                                         finish();
                                     }
                                     else{

@@ -45,11 +45,11 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/backBtn_progress"
+        android:id="@+id/applyBtn_progress"
         android:layout_width="170dp"
         android:layout_height="40dp"
         android:layout_marginBottom="72dp"
-        android:text="Back"
+        android:text="Apply"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

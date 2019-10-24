@@ -85,7 +85,8 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(MainActivity.INPUT_METHOD_SERVICE);
+                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(
+                            MainActivity.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
             }
@@ -119,7 +120,8 @@ public class ChatActivity extends AppCompatActivity {
 
         //set an empty adapter and update later.
         List<Chat> tempChat  = new ArrayList<>();
-        MessageAdapter emptyAdapter = new MessageAdapter(ChatActivity.this, tempChat, "default");
+        MessageAdapter emptyAdapter = new MessageAdapter(ChatActivity.this, tempChat,
+                "default");
         recyclerView.setAdapter(emptyAdapter);
 
         userName_view = findViewById(R.id.username_view_chat);
@@ -163,7 +165,8 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(MainActivity.INPUT_METHOD_SERVICE);
+                    InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(
+                            MainActivity.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
             }
@@ -325,7 +328,7 @@ public class ChatActivity extends AppCompatActivity {
 //                                    Toast.makeText(ChatActivity.this, "notification 2",
 //                                            Toast.LENGTH_SHORT).show();
                                 }else{
-                                    Toast.makeText(ChatActivity.this, "notification " +
+                                    Toast.makeText(ChatActivity.this, "notification" +
                                                     "Failed", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -352,7 +355,8 @@ public class ChatActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 if(user.getIsMatch().equals("N")){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity
+                            .this);
                     builder.setTitle("Conversation ends.")
                             .setMessage("Ops, Target user ended conversation")
                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -404,7 +408,8 @@ public class ChatActivity extends AppCompatActivity {
                             && targetUserModel.getUnLocked().equals("N")){
 
                         targetUserRef.child("unLocked").setValue("Y");
-                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity
+                                .this);
                         builder.setTitle("Congratulation!")
                                 .setMessage("User photo unlocked")
                                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
