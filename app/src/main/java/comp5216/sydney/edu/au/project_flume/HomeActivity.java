@@ -187,7 +187,8 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                  currentUserModel = dataSnapshot.getValue(User.class);
                 if (!currentUserModel.getIsMatch().equals("N")) {
-                    Intent intent = new Intent( HomeActivity.this, ChatActivity.class);
+                    Intent intent = new Intent( HomeActivity.this,
+                            ChatActivity.class);
                     intent.putExtra("targetId", currentUserModel.getMatchId());
                     startActivity(intent);
                 }

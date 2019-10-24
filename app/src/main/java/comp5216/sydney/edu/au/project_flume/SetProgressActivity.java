@@ -90,7 +90,8 @@ public class SetProgressActivity extends AppCompatActivity {
                 }
 
                 if(fromActivity!= null) {
-                    startActivity( new Intent(SetProgressActivity.this, HomeActivity.class));
+                    startActivity( new Intent(SetProgressActivity.this, HomeActivity
+                            .class));
                 }else{
                     onBackPressed();
                 }
