@@ -112,7 +112,10 @@ public class SetProgressActivity extends AppCompatActivity {
                 User user = dataSnapshot.getValue(User.class);
 
                 if(user.getImageUri().equals("default")) {
-                    profileImage.setImageResource(R.drawable.title_flume);
+
+                    profileImage.setImageResource(R.drawable.avatar_female);
+
+
                 }else{
                     Glide.with(SetProgressActivity.this).load(user.getImageUri())
                             .into(profileImage);

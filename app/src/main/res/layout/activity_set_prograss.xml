@@ -163,7 +163,7 @@
         android:textSize="@dimen/_13ssp"
         android:fontFamily="@font/sfuid_regular"
         android:alpha=".60"
-        android:text="Set the Photo to be Unlocked"/>
+        android:text="Set the Secret Photo!"/>
 
     <ImageView
         android:id="@+id/line4"
@@ -184,7 +184,8 @@
         android:layout_below="@+id/photoHint"
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:background="@drawable/imageframe"
+        tools:srcCompat="@drawable/avatar_female" />
 
     <Button
         android:id="@+id/applyBtn_progress"
