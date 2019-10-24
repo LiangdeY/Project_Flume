@@ -142,7 +142,7 @@
             android:textColor="#E6FFFFFF"
             android:textSize="@dimen/_14ssp"
             android:fontFamily="@font/sfuid_regular"
-            android:background="#1AEC42A3"
+            android:background="#66F3BCD1"
             />
 
 

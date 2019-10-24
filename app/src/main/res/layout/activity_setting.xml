@@ -50,12 +50,12 @@
                 android:layout_weight="1"
                 android:drawablePadding="0dp"
                 android:gravity="center_vertical|start"
-                android:paddingStart="30dp"
+                android:paddingStart="20dp"
                 android:paddingEnd="5dp"
                 android:text="Setting"
                 android:textColor="#D9FFFFFF"
                 android:textSize="20sp"
-                android:fontFamily="@font/sfuid_regular"
+                android:fontFamily="@font/sfuid_thin"
                 android:textStyle="bold"/>
 
         </LinearLayout>

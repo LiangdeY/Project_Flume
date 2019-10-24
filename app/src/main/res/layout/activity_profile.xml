@@ -4,32 +4,118 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
+    android:background="@drawable/background_4"
+    android:fitsSystemWindows="true"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".ProfileActivity">
 
-        <TextView
-            android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#0D363B61"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Profile"
-            android:textSize="24sp"
-            />
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            >
+
+            <Button
+                android:id="@+id/cancelBtn_profile"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/back_arrow"
+                style="@style/Widget.AppCompat.Button.Borderless" />
+
+            <TextView
+                android:id="@+id/text_profile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="0dp"
+                android:gravity="center_vertical|start"
+                android:paddingStart="20dp"
+                android:paddingEnd="5dp"
+                android:text="Profile Setting"
+                android:textColor="#D9FFFFFF"
+                android:textSize="20sp"
+                android:fontFamily="@font/sfuid_thin"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/toolbar_profile"
+        android:background="#1AA1A1A3" />
 
 
     <ImageView
         android:id="@+id/avatars_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="100dp"
+        android:layout_below="@+id/line"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
         tools:srcCompat="@tools:sample/avatars" />
+
+
+
+
+    <ImageView
+        android:id="@+id/line1"
+        android:layout_width="@dimen/_48sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/avatars_image"
+        android:layout_toStartOf="@+id/genderHint"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:alpha=".60"
+        android:src="@drawable/line" />
+
+    <TextView
+        android:id="@+id/genderHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/avatars_image"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_13ssp"
+        android:fontFamily="@font/sfuid_regular"
+        android:alpha=".60"
+        android:text="Choose Your Gender"/>
+
+    <ImageView
+        android:id="@+id/line2"
+        android:layout_width="@dimen/_48sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/avatars_image"
+        android:layout_toEndOf="@+id/genderHint"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:alpha=".60"
+        android:src="@drawable/line" />
+
+
+
     <RadioGroup
         android:id="@+id/radioSex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_below="@+id/logInHint"
+        android:layout_below="@+id/genderHint"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_35sdp">
+        android:layout_centerHorizontal="true">
 
         <RadioButton
             android:id="@+id/radioMale"
@@ -47,7 +133,6 @@
             android:id="@+id/radioFemale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginStart="@dimen/_20ssp"
             android:text="Female"
             android:checked="false"
@@ -59,95 +144,177 @@
 
     </RadioGroup>
 
-    <LinearLayout
-        android:layout_marginTop="100dp"
-        android:layout_width="match_parent"
+
+
+    <ImageView
+        android:id="@+id/line3"
+        android:layout_width="@dimen/_48sdp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/avatars_image"
-        android:id="@+id/username_linear_profile"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:text="Username"
-            android:textSize="18sp"
-            />
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_weight="1"
-            android:id="@+id/username_profile"
-            ></EditText>
-    </LinearLayout>
+        android:layout_below="@+id/radioSex"
+        android:layout_toStartOf="@+id/usernameHint"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:alpha=".60"
+        android:src="@drawable/line" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/username_linear_profile"
-        android:id="@+id/change_password_linear"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:text="Change password"
-            android:textSize="18sp"
-            />
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_weight="1"
-            android:id="@+id/change_password_profile"
-            ></EditText>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/change_password_linear"
-        >
-        <TextView
-            android:id="@+id/change_password"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:text="Confirm password"
-            android:textSize="18sp"
-            />
-
-        <EditText
-            android:id="@+id/confirm_password_profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="18sp"></EditText>
-    </LinearLayout>
-
-
-
-
-
-    <Button
-        android:id="@+id/cancelBtn_profile"
+    <TextView
+        android:id="@+id/usernameHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/radioSex"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_13ssp"
+        android:fontFamily="@font/sfuid_regular"
+        android:alpha=".60"
+        android:text="Change Your Username"/>
+
+    <ImageView
+        android:id="@+id/line4"
+        android:layout_width="@dimen/_48sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radioSex"
+        android:layout_toEndOf="@+id/usernameHint"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:alpha=".60"
+        android:src="@drawable/line" />
+
+    <ImageView
+        android:id="@+id/usernameRectangle"
+        android:layout_width="@dimen/_230sdp"
+        android:layout_height="@dimen/_34sdp"
+        android:layout_below="@+id/usernameHint"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:alpha=".75"
+        android:src="@drawable/edittext_bg" />
+
+    <EditText
+        android:id="@+id/username_profile"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_below="@+id/usernameHint"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:hint="Username"
+        android:textColorHint="#80FFFFFF"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:fontFamily="@font/sfuid_thin"
+        android:singleLine="true"
+        android:background="@null"
+        android:textSize="@dimen/_11ssp"
         />
+
+
+
+
+    <ImageView
+        android:id="@+id/line5"
+        android:layout_width="@dimen/_48sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/usernameRectangle"
+        android:layout_toStartOf="@+id/passwordHint"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:alpha=".60"
+        android:src="@drawable/line" />
+
+    <TextView
+        android:id="@+id/passwordHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/usernameRectangle"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_13ssp"
+        android:fontFamily="@font/sfuid_regular"
+        android:alpha=".60"
+        android:text="Change Your Password"/>
+
+    <ImageView
+        android:id="@+id/line6"
+        android:layout_width="@dimen/_48sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/usernameRectangle"
+        android:layout_toEndOf="@+id/passwordHint"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:alpha=".60"
+        android:src="@drawable/line" />
+
+
+
+
+    <ImageView
+    android:id="@+id/passwordRectangle"
+    android:layout_width="@dimen/_230sdp"
+    android:layout_height="@dimen/_34sdp"
+    android:layout_below="@+id/passwordHint"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="15dp"
+    android:alpha=".75"
+    android:src="@drawable/edittext_bg" />
+
+    <EditText
+        android:id="@+id/change_password_profile"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_below="@+id/passwordHint"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:hint="New Password"
+        android:textColorHint="#80FFFFFF"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:fontFamily="@font/sfuid_thin"
+        android:singleLine="true"
+        android:background="@null"
+        android:textSize="@dimen/_11ssp" />
+
+    <ImageView
+        android:id="@+id/confirm_passwordRectangle"
+        android:layout_width="@dimen/_230sdp"
+        android:layout_height="@dimen/_34sdp"
+        android:layout_below="@+id/passwordRectangle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:alpha=".75"
+        android:src="@drawable/edittext_bg" />
+
+    <EditText
+        android:id="@+id/confirm_password_profile"
+        android:layout_width="@dimen/_180sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:layout_below="@+id/passwordRectangle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:hint="Confirm New Password"
+        android:textColorHint="#80FFFFFF"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:fontFamily="@font/sfuid_thin"
+        android:singleLine="true"
+        android:background="@null"
+        android:textSize="@dimen/_11ssp"/>
+
+
     <Button
         android:id="@+id/applyBtn_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:text="Apply" />
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:text="Confirm"
+        android:textColor="#E6FFFFFF"
+        android:textSize="@dimen/_13ssp"
+        android:fontFamily="@font/sfuid_regular"
+        android:textStyle="bold"
+        android:layout_below="@+id/confirm_passwordRectangle"
+        android:layout_marginTop="25dp"
+        android:background="#336295EC"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
