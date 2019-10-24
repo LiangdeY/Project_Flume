@@ -273,7 +273,8 @@
         android:fontFamily="@font/sfuid_thin"
         android:singleLine="true"
         android:background="@null"
-        android:textSize="@dimen/_11ssp" />
+        android:textSize="@dimen/_11ssp"
+        android:inputType="textPassword"/>
 
     <ImageView
         android:id="@+id/confirm_passwordRectangle"
@@ -299,7 +300,8 @@
         android:fontFamily="@font/sfuid_thin"
         android:singleLine="true"
         android:background="@null"
-        android:textSize="@dimen/_11ssp"/>
+        android:textSize="@dimen/_11ssp"
+        android:inputType="textPassword"/>
 
 
     <Button
