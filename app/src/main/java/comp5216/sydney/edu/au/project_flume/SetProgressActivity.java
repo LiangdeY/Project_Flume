@@ -112,7 +112,7 @@ public class SetProgressActivity extends AppCompatActivity {
                 User user = dataSnapshot.getValue(User.class);
                 if(user.getImageUri().equals("default")) {
 
-                    profileImage.setImageResource(R.drawable.defaultphoto);
+                    profileImage.setImageResource(R.drawable.avatar_female);
 
 
                 }else{
