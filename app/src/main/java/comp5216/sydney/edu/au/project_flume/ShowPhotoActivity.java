@@ -17,7 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import comp5216.sydney.edu.au.project_flume.Model.Chat;
 import comp5216.sydney.edu.au.project_flume.Model.User;
 
 public class ShowPhotoActivity extends AppCompatActivity {
@@ -32,6 +31,7 @@ public class ShowPhotoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show_photo);
 
         photo = findViewById(R.id.photo_show_photo);
+        backBtn = findViewById(R.id.backBtn_showPhoto);
 
         Intent intent = getIntent();
         targetUserId = intent.getStringExtra("targetUserId");
@@ -61,7 +61,6 @@ public class ShowPhotoActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
 
-        backBtn = findViewById(R.id.backBtn_showPhoto);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

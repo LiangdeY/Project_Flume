@@ -230,12 +230,14 @@ public class ChatActivity extends AppCompatActivity {
                     .getReference("Users").child(targetUserId);
             matchUserRef.child("isMatch").setValue("N");
             matchUserRef.child("matchId").setValue("N");
+            matchUserRef.child("unLocked").setValue("N");
 
             //unMatch the current user
             DatabaseReference currentUserRef = FirebaseDatabase.getInstance()
                     .getReference("Users").child(fUser.getUid());
             currentUserRef.child("isMatch").setValue("N");
             currentUserRef.child("matchId").setValue("N");
+            currentUserRef.child("unLocked").setValue("N");
 
             //TODO handle matches fail, consider transaction
             startActivity(new Intent(ChatActivity.this, HomeActivity.class));
