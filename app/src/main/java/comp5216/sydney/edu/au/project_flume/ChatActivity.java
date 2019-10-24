@@ -237,7 +237,6 @@ public class ChatActivity extends AppCompatActivity {
             currentUserRef.child("isMatch").setValue("N");
             currentUserRef.child("matchId").setValue("N");
 
-            unMatchBool = true;
             //TODO handle matches fail, consider transaction
             startActivity(new Intent(ChatActivity.this, HomeActivity.class));
 

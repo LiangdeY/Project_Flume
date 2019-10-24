@@ -1,32 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_chat"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@drawable/background_4"
+    android:fitsSystemWindows="true"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".SettingActivity"
-    android:gravity="center"
     >
 
-    <Button
-        android:id="@+id/backBtn_setting"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Back" />
+        android:layout_alignParentTop="true"
+        android:background="#08020511"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            >
+
+            <Button
+                android:id="@+id/backBtn_setting"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:background="@drawable/ic_action_close"
+                style="@style/Widget.AppCompat.Button.Borderless" />
+
+            <TextView
+                android:id="@+id/text_setting"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="0dp"
+                android:gravity="center_vertical|start"
+                android:paddingStart="30dp"
+                android:paddingEnd="5dp"
+                android:text="Setting"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:fontFamily="@font/sfuid_regular"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
     <Button
         android:id="@+id/set_progress_setting"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Progress Setting" />
+        android:layout_height="50dp"
+        android:layout_below="@id/toolbar_setting"
+        android:layout_marginTop="2dp"
+        android:text="Intimacy Setting"
+        android:background="#33082A8B"
+        android:fontFamily="@font/sfuid_thin"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
+        android:gravity="left|center_vertical"
+        android:paddingStart="30dp"
+        android:drawableEnd="@drawable/arrow"
+        android:paddingEnd="20dp" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/set_progress_setting"
+        android:background="#1AA1A1A3" />
+
     <Button
         android:id="@+id/profile_setting"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Profile Setting" />
+        android:layout_height="50dp"
+        android:layout_below="@id/line"
+        android:text="Profile Setting"
+        android:background="#33082A8B"
+        android:fontFamily="@font/sfuid_thin"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
+        android:gravity="left|center_vertical"
+        android:paddingStart="30dp"
+        android:drawableEnd="@drawable/arrow"
+        android:paddingEnd="20dp" />
+
     <Button
         android:id="@+id/sign_out_setting"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sign Out" />
-</LinearLayout>
+        android:layout_height="@dimen/_40sdp"
+        android:layout_alignParentBottom="true"
+        android:alpha=".80"
+        android:text="Sign Out"
+        android:textColor="#E6FFFFFF"
+        android:textSize="@dimen/_13ssp"
+        android:fontFamily="@font/sfuid_regular"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:background="@drawable/footer"
+        android:drawableEnd="@drawable/exit"
+        android:paddingEnd="140dp"
+        android:drawablePadding="-150dp"
+        />
+
+</RelativeLayout>
