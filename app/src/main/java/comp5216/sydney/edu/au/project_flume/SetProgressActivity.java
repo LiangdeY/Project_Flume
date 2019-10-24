@@ -46,7 +46,6 @@ public class SetProgressActivity extends AppCompatActivity {
     ImageView profileImage;
     StorageReference storageRef;
     String fromActivity;
-
     private static final int IMAGE_REQUEST = 100;
     private Uri imageURI;
     private StorageTask uploadTask;
@@ -56,10 +55,10 @@ public class SetProgressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_prograss);
 
-        Intent intent = getIntent();
-        fromActivity = intent.getStringExtra("from");
-        InitUI();
+        Intent i = getIntent();
+        fromActivity = i.getStringExtra("from");
 
+        InitUI();
         storageRef = FirebaseStorage.getInstance().getReference("uploads");
     }
     private void InitUI(){
@@ -84,19 +83,12 @@ public class SetProgressActivity extends AppCompatActivity {
         applyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 currentUserRef.child("progressMax").setValue(progress_max.getText().toString());
-
-                if(fromActivity.equals("signUp")){
-                    startActivity(new Intent( SetProgressActivity.this,
-                            HomeActivity.class));
+                if(fromActivity!= null) {
+                    startActivity( new Intent(SetProgressActivity.this, HomeActivity.class));
+                }else{
+                    onBackPressed();
                 }
-
-                if(fromActivity.equals("setting")){
-                    startActivity(new Intent( SetProgressActivity.this,
-                            SettingActivity.class));
-                }
-
             }
         });
         currentUserRef.addValueEventListener(new ValueEventListener() {
@@ -166,6 +158,8 @@ public class SetProgressActivity extends AppCompatActivity {
                         HashMap<String, Object> map = new HashMap<>();
                         map.put("imageUri", mUri);
                         currentUserRef.updateChildren(map);
+                        Toast.makeText(SetProgressActivity.this, "Upload success!",
+                                Toast.LENGTH_SHORT).show();
                         pDialog.dismiss();
 
                     }else{
