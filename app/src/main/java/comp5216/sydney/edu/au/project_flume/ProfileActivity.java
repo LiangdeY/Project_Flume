@@ -141,8 +141,6 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-
-
     private void GetUserDataOnce(){
         currentUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
@@ -150,14 +148,18 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 username.setText(user.getUsername());
+                if(user.getGender().equals("Male")){
+                    radioSexGroup.check(R.id.radioMale);
+                }
+                else if(user.getGender().equals("Female")){
+                    radioSexGroup.check(R.id.radioFemale);
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
     }
-
-
 
 
     private void SaveChanges(){
