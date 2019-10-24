@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class ResetPasswordActivity extends AppCompatActivity {
 
     EditText email;
-    Button resetPassword_Btn;
+    Button resetPassword_Btn, goBackBtn;
     FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,15 @@ public class ResetPasswordActivity extends AppCompatActivity {
                             MainActivity.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
+            }
+        });
+
+        goBackBtn = findViewById(R.id.goBackBtn);
+        goBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity( new Intent(ResetPasswordActivity.this, MainActivity.class) );
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
 
