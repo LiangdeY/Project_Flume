@@ -1,22 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@drawable/background"
+    android:fitsSystemWindows="true"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".ShowPhotoActivity">
 
     <ImageView
+        android:id="@+id/appTitle"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:alpha=".70"
+        android:src="@drawable/title_flume" />
+
+    <ImageView
+        android:id="@+id/line1"
+        android:layout_width="@dimen/_15sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appTitle"
+        android:layout_toStartOf="@+id/showHint"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:alpha=".70"
+        android:src="@drawable/line" />
+
+    <TextView
+        android:id="@+id/showHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appTitle"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_13ssp"
+        android:fontFamily="@font/sfuid_thin"
+        android:alpha=".80"
+        android:text="Your intimacy is enough to unlock this photo!!"/>
+
+    <ImageView
+        android:id="@+id/line2"
+        android:layout_width="@dimen/_15sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appTitle"
+        android:layout_toEndOf="@+id/showHint"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:alpha=".70"
+        android:src="@drawable/line" />
+
+
+    <ImageView
         android:id="@+id/photo_show_photo"
+        android:layout_below="@+id/showHint"
+        android:layout_marginTop="@dimen/_25sdp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         tools:src="@tools:sample/avatars" />
+
 
     <Button
         android:id="@+id/backBtn_showPhoto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Back" />
-</LinearLayout>
+        android:layout_height="@dimen/_50sdp"
+        android:layout_alignParentBottom="true"
+        android:alpha=".80"
+        android:text="Back to Chat!"
+        android:textStyle="bold"
+        android:textColor="#E6FFFFFF"
+        android:textSize="@dimen/_13ssp"
+        android:fontFamily="@font/sfuid_regular"
+        android:textAllCaps="false"
+        android:background="@drawable/footer"
+        />
+
+</RelativeLayout>

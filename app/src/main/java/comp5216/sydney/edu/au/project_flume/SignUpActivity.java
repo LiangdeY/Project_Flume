@@ -79,7 +79,7 @@ public class SignUpActivity extends AppCompatActivity {
         goBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity( new Intent(SignUpActivity.this, MainActivity.class) );
+                onBackPressed();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
