@@ -13,12 +13,20 @@
     tools:context=".SettingActivity"
     >
 
+    <ImageView
+        android:id="@+id/appTitle"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:alpha=".30"
+        android:src="@drawable/title_flume" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="#08020511"
+        android:background="#0D363B61"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,7 +53,7 @@
                 android:paddingStart="30dp"
                 android:paddingEnd="5dp"
                 android:text="Setting"
-                android:textColor="#ffffff"
+                android:textColor="#D9FFFFFF"
                 android:textSize="20sp"
                 android:fontFamily="@font/sfuid_regular"
                 android:textStyle="bold"/>
@@ -53,14 +61,20 @@
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
+    <View
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/toolbar_setting"
+        android:background="#1AA1A1A3" />
+
     <Button
         android:id="@+id/set_progress_setting"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/toolbar_setting"
-        android:layout_marginTop="2dp"
+        android:layout_below="@+id/line1"
         android:text="Intimacy Setting"
-        android:background="#33082A8B"
+        android:background="#33254BB3"
         android:fontFamily="@font/sfuid_thin"
         android:textColor="#ffffff"
         android:textSize="@dimen/_14ssp"
@@ -71,7 +85,7 @@
         android:paddingEnd="20dp" />
 
     <View
-        android:id="@+id/line"
+        android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@id/set_progress_setting"
@@ -81,9 +95,9 @@
         android:id="@+id/profile_setting"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/line"
+        android:layout_below="@id/line2"
         android:text="Profile Setting"
-        android:background="#33082A8B"
+        android:background="#33254BB3"
         android:fontFamily="@font/sfuid_thin"
         android:textColor="#ffffff"
         android:textSize="@dimen/_14ssp"

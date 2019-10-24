@@ -1,60 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profile_image"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:background="@drawable/background_4"
+    android:fitsSystemWindows="true"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".SetProgressActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Progress dificulty"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.411" />
 
-    <EditText
-        android:id="@+id/progress_max_progress"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_intimacy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#0D363B61"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            >
+
+            <TextView
+                android:id="@+id/text_setting"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="0dp"
+                android:gravity="center_vertical|start"
+                android:paddingStart="20dp"
+                android:paddingEnd="5dp"
+                android:text="Intimacy Setting"
+                android:textColor="#D9FFFFFF"
+                android:textSize="20sp"
+                android:fontFamily="@font/sfuid_regular"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/line1"
+        android:layout_width="@dimen/_48sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_intimacy"
+        android:layout_toStartOf="@+id/difficultyHint"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_35sdp"
+        android:alpha=".60"
+        android:src="@drawable/line" />
+
+    <TextView
+        android:id="@+id/difficultyHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.853"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.399" />
+        android:layout_below="@+id/toolbar_intimacy"
+        android:layout_marginTop="@dimen/_26sdp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_13ssp"
+        android:fontFamily="@font/sfuid_regular"
+        android:alpha=".60"
+        android:text="Set Unlock Photo Difficulty"/>
+
+    <ImageView
+        android:id="@+id/line2"
+        android:layout_width="@dimen/_48sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_intimacy"
+        android:layout_toEndOf="@+id/difficultyHint"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_35sdp"
+        android:alpha=".60"
+        android:src="@drawable/line" />
+
+
+
+    <RadioGroup
+        android:id="@+id/radio_difficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/difficultyHint"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_20sdp">
+
+        <RadioButton
+            android:id="@+id/radioEasy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Easy"
+            android:checked="true"
+            android:textColor="#CCFFFFFF"
+            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/sfuid_regular"
+            android:alpha=".80" />
+
+        <RadioButton
+            android:id="@+id/radioMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20ssp"
+            android:text="Medium"
+            android:checked="false"
+            android:textColor="#CCFFFFFF"
+            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/sfuid_regular"
+            android:alpha=".80" />
+
+        <RadioButton
+            android:id="@+id/radioHard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20ssp"
+            android:text="Hard"
+            android:checked="false"
+            android:textColor="#CCFFFFFF"
+            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/sfuid_regular"
+            android:alpha=".80" />
+
+    </RadioGroup>
+
+
+
+
+
+    <ImageView
+        android:id="@+id/line3"
+        android:layout_width="@dimen/_48sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radio_difficulty"
+        android:layout_toStartOf="@+id/photoHint"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_45sdp"
+        android:alpha=".60"
+        android:src="@drawable/line" />
+
+    <TextView
+        android:id="@+id/photoHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radio_difficulty"
+        android:layout_marginTop="@dimen/_36sdp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/_13ssp"
+        android:fontFamily="@font/sfuid_regular"
+        android:alpha=".60"
+        android:text="Set the Photo to be Unlocked"/>
+
+    <ImageView
+        android:id="@+id/line4"
+        android:layout_width="@dimen/_48sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radio_difficulty"
+        android:layout_toEndOf="@+id/photoHint"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_45sdp"
+        android:alpha=".60"
+        android:src="@drawable/line" />
+
 
     <ImageView
         android:id="@+id/profile_image_progress"
-        android:layout_width="139dp"
-        android:layout_height="186dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.611"
+        android:layout_width="240dp"
+        android:layout_height="320dp"
+        android:layout_below="@+id/photoHint"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
         android:id="@+id/applyBtn_progress"
-        android:layout_width="170dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="72dp"
-        android:text="Apply"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.838" />
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:text="Confirm"
+        android:textColor="#E6FFFFFF"
+        android:textSize="@dimen/_13ssp"
+        android:fontFamily="@font/sfuid_regular"
+        android:textStyle="bold"
+        android:layout_below="@+id/profile_image_progress"
+        android:layout_marginTop="30dp"
+        android:background="#332D4775"
+        android:layout_centerHorizontal="true"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

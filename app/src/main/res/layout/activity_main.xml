@@ -142,9 +142,8 @@
             android:textColor="#E6FFFFFF"
             android:textSize="@dimen/_14ssp"
             android:fontFamily="@font/sfuid_regular"
-            android:alpha=".70"
-            android:background="@drawable/login_rectangle"
-            style="@style/Widget.AppCompat.Button.Borderless"/>
+            android:background="#1AEC42A3"
+            />
 
 
 
