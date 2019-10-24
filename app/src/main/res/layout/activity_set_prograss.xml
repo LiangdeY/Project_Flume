@@ -29,7 +29,7 @@
             >
 
             <TextView
-                android:id="@+id/text_setting"
+                android:id="@+id/text_intimacy"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -40,11 +40,19 @@
                 android:text="Intimacy Setting"
                 android:textColor="#D9FFFFFF"
                 android:textSize="20sp"
-                android:fontFamily="@font/sfuid_regular"
+                android:fontFamily="@font/sfuid_thin"
                 android:textStyle="bold"/>
 
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/toolbar_intimacy"
+        android:background="#1AA1A1A3" />
+
 
     <ImageView
         android:id="@+id/line1"
@@ -171,8 +179,8 @@
 
     <ImageView
         android:id="@+id/profile_image_progress"
-        android:layout_width="240dp"
-        android:layout_height="320dp"
+        android:layout_width="210dp"
+        android:layout_height="280dp"
         android:layout_below="@+id/photoHint"
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
@@ -188,8 +196,8 @@
         android:fontFamily="@font/sfuid_regular"
         android:textStyle="bold"
         android:layout_below="@+id/profile_image_progress"
-        android:layout_marginTop="30dp"
-        android:background="#332D4775"
+        android:layout_marginTop="20dp"
+        android:background="#336295EC"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

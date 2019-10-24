@@ -42,7 +42,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         goBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity( new Intent(ResetPasswordActivity.this, MainActivity.class) );
+                onBackPressed();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
