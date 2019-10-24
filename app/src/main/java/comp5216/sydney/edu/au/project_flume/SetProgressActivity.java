@@ -67,6 +67,7 @@ public class SetProgressActivity extends AppCompatActivity {
     private void InitUI(){
         profileImage = findViewById(R.id.profile_image_progress);
         radioGroup = findViewById(R.id.radio_difficulty);
+
         FirebaseUser mFirebaseUser  = FirebaseAuth.getInstance().getCurrentUser();
         currentUserRef = FirebaseDatabase.getInstance().getReference("Users")
                 .child(mFirebaseUser.getUid());
@@ -78,25 +79,34 @@ public class SetProgressActivity extends AppCompatActivity {
                 int selectedId = radioGroup.getCheckedRadioButtonId();
                 radioButton = findViewById(selectedId);
 
-                switch (radioButton.getText().toString()){
-
-                    case "Easy": currentUserRef.child("progressMax").setValue(String.valueOf(20));
-                        break;
-                    case "Medium": currentUserRef.child("progressMax").setValue(String.valueOf(50));
-                        break;
-                    case "Hard": currentUserRef.child("progressMax").setValue(String.valueOf(100));
-                        break;
-                        default:
+                if(radioButton.getText().toString().equals("Easy")){
+                    currentUserRef.child("progressMax").setValue(String.valueOf(10));
+                }
+                else if(radioButton.getText().toString().equals("Medium")) {
+                    currentUserRef.child("progressMax").setValue(String.valueOf(30));
+                }
+                else if(radioButton.getText().toString().equals("Hard")) {
+                    currentUserRef.child("progressMax").setValue(String.valueOf(70));
                 }
 
                 if(fromActivity!= null) {
-                    startActivity( new Intent(SetProgressActivity.this, HomeActivity.class));
+                    startActivity( new Intent(SetProgressActivity.this, HomeActivity
+                            .class));
                 }else{
                     onBackPressed();
                 }
             }
         });
-        currentUserRef.addValueEventListener(new ValueEventListener() {
+        LoadImage();
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OpenImage();
+            }
+        });
+    }
+    private void LoadImage(){
+        currentUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
@@ -104,8 +114,8 @@ public class SetProgressActivity extends AppCompatActivity {
 
                     profileImage.setImageResource(R.drawable.defaultphoto);
 
-                }else{
 
+                }else{
                     Glide.with(SetProgressActivity.this).load(user.getImageUri())
                             .into(profileImage);
                 }
@@ -113,12 +123,7 @@ public class SetProgressActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
-        profileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OpenImage();
-            }
-        });
+
     }
 
     private void OpenImage() {
