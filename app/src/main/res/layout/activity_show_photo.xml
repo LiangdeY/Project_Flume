@@ -59,9 +59,12 @@
     <ImageView
         android:id="@+id/photo_show_photo"
         android:layout_below="@+id/showHint"
-        android:layout_marginTop="@dimen/_25sdp"
-        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxHeight="280dp"
+        android:background="@drawable/imageframe"
         tools:src="@tools:sample/avatars" />
 
 
