@@ -25,16 +25,19 @@ public class MainActivity extends AppCompatActivity {
     EditText email, password;
     TextView forgetPassword;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         auth = FirebaseAuth.getInstance();
-        email = findViewById(R.id.email_login);
 
+        email = findViewById(R.id.email_login);
+        login = findViewById(R.id.login_main);
+        signUp = findViewById(R.id.signUp_main);
         forgetPassword = findViewById(R.id.forgetPassword_main);
+        password = findViewById(R.id.password_login);
+
         forgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
-
-        password = findViewById(R.id.password_login);
 
         email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -66,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        login = findViewById(R.id.login_main);
-        signUp = findViewById(R.id.signUp_main);
+
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,6 +104,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+    }
+    private void InitUI(){
 
     }
 //    @Override

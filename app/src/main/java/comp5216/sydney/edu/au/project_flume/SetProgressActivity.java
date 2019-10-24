@@ -110,11 +110,21 @@ public class SetProgressActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
+
                 if(user.getImageUri().equals("default")) {
                     profileImage.setImageResource(R.drawable.title_flume);
                 }else{
                     Glide.with(SetProgressActivity.this).load(user.getImageUri())
                             .into(profileImage);
+                }
+
+                if(user.getProgressMax().equals("10")) {
+                    radioGroup.check(R.id.radioEasy);
+                }else if(user.getProgressMax().equals("30")) {
+                    radioGroup.check(R.id.radioMedium);
+                }
+                else if(user.getProgressMax().equals("70")) {
+                    radioGroup.check(R.id.radioHard);
                 }
             }
             @Override
